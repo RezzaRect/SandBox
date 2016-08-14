@@ -1,0 +1,105 @@
+# depslib dependency file v1.0
+1471162211 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+	<iostream>
+	<stdio.h>
+	<SDL.h>
+	"Display.h"
+	"Mesh.h"
+	"Shader.h"
+	"Camera.h"
+	"Transform.h"
+	"Texture.h"
+	"obj_loader.h"
+	"Geometric_Primitives.h"
+	<glm/glm.hpp>
+
+1471159872 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+	"Display.h"
+	<iostream>
+	<stdio.h>
+
+1470981940 c:\users\michael\desktop\projects\sandbox\display.h
+	<GL/glew.h>
+	<SDL.h>
+	<string>
+
+1471057679 c:\users\michael\desktop\projects\sandbox\shader.h
+	<string>
+	<GL/glew.h>
+	"Camera.h"
+	"Transform.h"
+
+1471063300 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
+	"Shader.h"
+	<fstream>
+	<iostream>
+
+1471158582 c:\users\michael\desktop\projects\sandbox\mesh.h
+	<GL/glew.h>
+	<string>
+	<glm/glm.hpp>
+	"obj_loader.h"
+
+1471076116 source:c:\users\michael\desktop\projects\sandbox\mesh.cpp
+	"Mesh.h"
+	"obj_loader.h"
+	<vector>
+
+1471123915 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+	"Camera.h"
+	<SDL.h>
+
+1471057519 c:\users\michael\desktop\projects\sandbox\camera.h
+	<glm/glm.hpp>
+	<glm/gtx/transform.hpp>
+
+1470725226 c:\users\michael\desktop\projects\sandbox\transform.h
+	<glm/glm.hpp>
+	<glm/gtx/transform.hpp>
+	"Camera.h"
+
+1470723762 source:c:\users\michael\desktop\projects\sandbox\stb_image.c
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	<assert.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdint.h>
+
+1470739725 source:c:\users\michael\desktop\projects\sandbox\texture.cpp
+	"Texture.h"
+	"stb_image.h"
+	<cassert>
+	<iostream>
+
+1470739725 c:\users\michael\desktop\projects\sandbox\texture.h
+	<string>
+	<GL/glew.h>
+
+1470723762 c:\users\michael\desktop\projects\sandbox\stb_image.h
+	<stdio.h>
+
+1470786893 c:\users\michael\desktop\projects\sandbox\obj_loader.h
+	<glm/glm.hpp>
+	<vector>
+	<string>
+
+1470786893 source:c:\users\michael\desktop\projects\sandbox\obj_loader.cpp
+	"obj_loader.h"
+	<fstream>
+	<iostream>
+	<algorithm>
+	<map>
+
+1471154420 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
+	<stdlib.h>
+	"Geometric_Primitives.h"
+
+1471153886 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
+	"obj_loader.h"
+	"Mesh.h"
+
