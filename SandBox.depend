@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1471162211 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1471320010 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<SDL.h>
@@ -11,9 +11,10 @@
 	"Texture.h"
 	"obj_loader.h"
 	"Geometric_Primitives.h"
+	"Clock.h"
 	<glm/glm.hpp>
 
-1471159872 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1471253884 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
@@ -45,11 +46,11 @@
 	"obj_loader.h"
 	<vector>
 
-1471123915 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+1471312393 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
 	"Camera.h"
 	<SDL.h>
 
-1471057519 c:\users\michael\desktop\projects\sandbox\camera.h
+1471312211 c:\users\michael\desktop\projects\sandbox\camera.h
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 
@@ -102,4 +103,7 @@
 1471153886 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
 	"obj_loader.h"
 	"Mesh.h"
+
+1471319901 c:\users\michael\desktop\projects\sandbox\clock.h
+	<SDL.h>
 

@@ -36,5 +36,5 @@ void MoveForward(glm::vec3* p, float amount);
 void MoveBackward(glm::vec3* p, float amount);
 void MoveRight(glm::vec3* p, float amount);
 void MoveLeft(glm::vec3* p, float amount);
-void UpdateCam(Camera** cam, int WIDTH, int HEIGHT);
+void UpdateCam(Camera** cam, int WIDTH, int HEIGHT, float deltaTime);
 #endif // CAMERA_H_INCLUDED

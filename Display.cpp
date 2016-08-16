@@ -38,8 +38,8 @@ void InitDisplay(SDL_Window** window, SDL_GLContext& context, int width, int hei
 	glEnable(GL_DEPTH_TEST);
 
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT);
 }
 
 void Clear(float r, float g, float b, float a){

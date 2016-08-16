@@ -55,7 +55,7 @@ float verticalAngle = 0.0f;
 
 // http://stackoverflow.com/questions/1252976/how-to-handle-multiple-keypresses-at-once-with-sdl
 
-void UpdateCam(Camera** cam, int WIDTH, int HEIGHT){
+void UpdateCam(Camera** cam, int WIDTH, int HEIGHT, float deltaTime){
     const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
     SDL_Event event;
     SDL_PollEvent(&event);
@@ -68,7 +68,7 @@ void UpdateCam(Camera** cam, int WIDTH, int HEIGHT){
     SDL_WarpMouseInWindow(NULL, WIDTH/2, HEIGHT/2);
 
 
-    float speed = 0.01; //3.0f; // 3 units / second
+    float speed = 0.05; //3.0f; // 3 units / second
     float mouseSpeed = 0.005f;
 
 
@@ -96,25 +96,25 @@ void UpdateCam(Camera** cam, int WIDTH, int HEIGHT){
     if(keyboard_state_array[SDL_SCANCODE_LSHIFT])
         speed *= 2.0f;
     else
-        speed = 0.01f;
+        speed = 0.05f;
 
     if (keyboard_state_array[SDL_SCANCODE_A])
-        (*cam)->pos -= right * speed; //0.005f;
+        (*cam)->pos -= right * speed * deltaTime; //0.005f;
 
     if (keyboard_state_array[SDL_SCANCODE_D])
-        (*cam)->pos += right * speed; //0.005f;
+        (*cam)->pos += right * speed * deltaTime; //0.005f;
 
     if (keyboard_state_array[SDL_SCANCODE_S])
-        (*cam)->pos -= (*cam)->forward * speed; //0.005f;
+        (*cam)->pos -= (*cam)->forward * speed * deltaTime; //0.005f;
 
     if (keyboard_state_array[SDL_SCANCODE_W])
-        (*cam)->pos += (*cam)->forward * speed; //0.005f;
+        (*cam)->pos += (*cam)->forward * speed * deltaTime; //0.005f;
 
     if(keyboard_state_array[SDL_SCANCODE_Q])
-        (*cam)->pos += (*cam)->up *speed;
+        (*cam)->pos += (*cam)->up *speed * deltaTime;
 
     if(keyboard_state_array[SDL_SCANCODE_Z])
-        (*cam)->pos -= (*cam)->up *speed;
+        (*cam)->pos -= (*cam)->up *speed * deltaTime;
 
     (*cam)->projection = CreateProjection(**cam);
     //return c;
