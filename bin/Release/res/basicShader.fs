@@ -3,11 +3,12 @@
 uniform sampler2D diffuse;
 uniform vec3 viewPos;
 
-varying vec2 texCoord0;
-varying vec3 normal0;
-varying vec3 fragPos0;
+in vec2 texCoord0;
+in vec3 normal0;
+in vec3 fragPos0;
 //varying vec3 vertPos;
 
+out vec4 finalColor;
 
 void main()
 {
@@ -25,5 +26,5 @@ void main()
     float specular = pow(specAngle, 128.0);
 
 
-    gl_FragColor = specular + dif * texture2D(diffuse, texCoord0); //vec2(0.32,0.12));
+    finalColor = specular + dif * texture2D(diffuse, texCoord0); //vec2(0.32,0.12));
 }

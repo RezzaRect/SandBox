@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1471320010 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1471429499 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
+	<time.h>
 	<SDL.h>
 	"Display.h"
 	"Mesh.h"
@@ -13,8 +14,12 @@
 	"Geometric_Primitives.h"
 	"Clock.h"
 	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/quaternion.hpp>
+	<glm/gtx/quaternion.hpp>
+	<btBulletDynamicsCommon.h>
 
-1471253884 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1471402194 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
@@ -30,7 +35,7 @@
 	"Camera.h"
 	"Transform.h"
 
-1471063300 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
+1471403943 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
 	"Shader.h"
 	<fstream>
 	<iostream>
@@ -46,7 +51,7 @@
 	"obj_loader.h"
 	<vector>
 
-1471312393 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+1471339501 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
 	"Camera.h"
 	<SDL.h>
 
@@ -106,4 +111,20 @@
 
 1471319901 c:\users\michael\desktop\projects\sandbox\clock.h
 	<SDL.h>
+
+1471406468 source:c:\users\michael\desktop\projects\sandbox\particles.cpp
+	"Particles.h"
+	"Shader.h"
+	"Transform.h"
+
+1471404884 c:\users\michael\desktop\projects\sandbox\particles.h
+	<GL/glew.h>
+	<glm/common.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtx/norm.hpp>
+	<stdio.h>
+	<stdlib.h>
+	<vector>
+	<algorithm>
+	"Camera.h"
 

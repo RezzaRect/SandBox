@@ -34,6 +34,8 @@ Shader::Shader(const std::string& fileName)
 	m_uniforms[1] = glGetUniformLocation(m_program, "view");
 	m_uniforms[2] = glGetUniformLocation(m_program, "projection");
 	m_uniforms[3] = glGetUniformLocation(m_program, "viewPos");
+	m_uniforms[4] = glGetUniformLocation(m_program, "CameraRight_worldspace");
+	m_uniforms[5] = glGetUniformLocation(m_program, "CameraUp_worldspace");
 	// Increase size of "m_uniforms[SIZE]" GLuint array make
 	// sure the data passed into update matches these declarations
 	// m_uniforms[2] = glGetUniformLocation(m_program, "Normal");
@@ -68,6 +70,8 @@ void Shader::Update(const Transform& transform, Camera& camera){
     glUniformMatrix4fv(m_uniforms[1], 1, GL_FALSE, &viewProj[0][0]);
     glUniformMatrix4fv(m_uniforms[2], 1, GL_FALSE, &camera.projection[0][0]);
     glUniform3f(m_uniforms[3], camera.pos.x, camera.pos.y, camera.pos.z);
+    glUniform3f(m_uniforms[4], viewProj[0][0], viewProj[1][0], viewProj[2][0]);
+    glUniform3f(m_uniforms[5], viewProj[0][1], viewProj[1][1], viewProj[2][1]);
 }
 
 static GLuint CreateShader(const std::string& text, GLenum shaderType){

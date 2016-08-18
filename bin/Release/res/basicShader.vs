@@ -1,8 +1,8 @@
 #version 120
 
-attribute vec3 position;
-attribute vec2 texCoord;
-attribute vec3 normal;
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec2 texCoord;
+layout(location = 2) in vec3 normal;
 
 // just View Projection no model or
 // transform really... :/ :D
@@ -13,10 +13,10 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-varying vec2 texCoord0;
-varying vec3 normal0;
+out vec2 texCoord0;
+out vec3 normal0;
 //varying vec3 vertPos;
-varying vec3 fragPos0;
+out vec3 fragPos0;
 
 void main()
 {

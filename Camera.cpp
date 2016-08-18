@@ -109,12 +109,12 @@ void UpdateCam(Camera** cam, int WIDTH, int HEIGHT, float deltaTime){
 
     if (keyboard_state_array[SDL_SCANCODE_W])
         (*cam)->pos += (*cam)->forward * speed * deltaTime; //0.005f;
-
+    // not cam up but absolute up
     if(keyboard_state_array[SDL_SCANCODE_Q])
-        (*cam)->pos += (*cam)->up *speed * deltaTime;
-
+        (*cam)->pos += glm::vec3(0.0,1.0,0.0) *speed * deltaTime;
+    // not cam->up but absolute up
     if(keyboard_state_array[SDL_SCANCODE_Z])
-        (*cam)->pos -= (*cam)->up *speed * deltaTime;
+        (*cam)->pos -= glm::vec3(0.0,1.0,0.0) *speed * deltaTime;
 
     (*cam)->projection = CreateProjection(**cam);
     //return c;

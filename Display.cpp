@@ -23,7 +23,7 @@ void InitDisplay(SDL_Window** window, SDL_GLContext& context, int width, int hei
 	//SDL_GLContext m_glContext
 	context = SDL_GL_CreateContext(*window);
 
-	//glewExperimental=GL_TRUE;
+	glewExperimental=GL_TRUE;
 	GLenum res = glewInit();
     if(res != GLEW_OK)
     {
@@ -62,10 +62,14 @@ void UpdateDisplay(SDL_Window** w, SDL_GLContext& c, Display& disp){
 
     const Uint8 *keyboard_state_array = SDL_GetKeyboardState(NULL);
 
-    SDL_Event e;
+    SDL_Event event;
+    SDL_PollEvent(&event);
+    if (keyboard_state_array[SDL_SCANCODE_ESCAPE])
+        disp.isClosed = true;
 
+    SDL_Event e;
     while(SDL_PollEvent(&e)){
-        if(e.type == SDL_QUIT || keyboard_state_array[SDL_SCANCODE_ESCAPE])
+        if(e.type == SDL_QUIT) // || keyboard_state_array[SDL_SCANCODE_ESCAPE]
             disp.isClosed = true;
             //CloseWindow(w, c);
     }
