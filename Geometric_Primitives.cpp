@@ -116,3 +116,30 @@ IndexedModel setupCube(float cubeSize){
     //return mesh;
     return model;
 }
+
+IndexedModel setupLowDensityPlane(float planeSize){
+    IndexedModel model;
+
+    Vertex planeVertices[] = {
+        // BOTTOM SIDE
+        Vertex(glm::vec3(-planeSize, -planeSize, -planeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(planeSize, -planeSize, -planeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(planeSize, -planeSize, planeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-planeSize, -planeSize, planeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+    };
+    unsigned int indices[] = { 0,  1,  2,  0,  2,  3 };
+
+    int vertSize = sizeof(planeVertices) / sizeof(planeVertices[0]);
+    int indicesSize = sizeof(indices) / sizeof(indices[0]);
+
+    for(int i = 0; i < vertSize; i++){
+        model.normals.push_back(*planeVertices[i].GetNormal());
+        model.texCoords.push_back(*planeVertices[i].GetTexCoord());
+        model.positions.push_back(*planeVertices[i].GetPos());
+    }
+
+    for(int i = 0; i < indicesSize; i++)
+        model.indices.push_back(indices[i]);
+
+    return model;
+}

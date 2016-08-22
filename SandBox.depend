@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1471429499 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1471862347 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -13,13 +13,11 @@
 	"obj_loader.h"
 	"Geometric_Primitives.h"
 	"Clock.h"
+	"BulletDebugDeprecatedGL.h"
 	<glm/glm.hpp>
-	<glm/gtc/matrix_transform.hpp>
-	<glm/gtc/quaternion.hpp>
-	<glm/gtx/quaternion.hpp>
 	<btBulletDynamicsCommon.h>
 
-1471402194 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1471655062 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
@@ -29,13 +27,13 @@
 	<SDL.h>
 	<string>
 
-1471057679 c:\users\michael\desktop\projects\sandbox\shader.h
+1471611067 c:\users\michael\desktop\projects\sandbox\shader.h
 	<string>
 	<GL/glew.h>
 	"Camera.h"
 	"Transform.h"
 
-1471403943 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
+1471611067 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
 	"Shader.h"
 	<fstream>
 	<iostream>
@@ -51,7 +49,7 @@
 	"obj_loader.h"
 	<vector>
 
-1471339501 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+1471843426 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
 	"Camera.h"
 	<SDL.h>
 
@@ -59,9 +57,12 @@
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 
-1470725226 c:\users\michael\desktop\projects\sandbox\transform.h
+1471845419 c:\users\michael\desktop\projects\sandbox\transform.h
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/quaternion.hpp>
+	<glm/gtx/quaternion.hpp>
 	"Camera.h"
 
 1470723762 source:c:\users\michael\desktop\projects\sandbox\stb_image.c
@@ -101,11 +102,11 @@
 	<algorithm>
 	<map>
 
-1471154420 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
+1471577436 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
 	<stdlib.h>
 	"Geometric_Primitives.h"
 
-1471153886 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
+1471577361 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
 	"obj_loader.h"
 	"Mesh.h"
 
@@ -127,4 +128,7 @@
 	<vector>
 	<algorithm>
 	"Camera.h"
+
+1471862864 c:\users\michael\desktop\projects\sandbox\bulletdebugdeprecatedgl.h
+	<btBulletDynamicsCommon.h>
 

@@ -68,7 +68,7 @@ void UpdateCam(Camera** cam, int WIDTH, int HEIGHT, float deltaTime){
     SDL_WarpMouseInWindow(NULL, WIDTH/2, HEIGHT/2);
 
 
-    float speed = 0.05; //3.0f; // 3 units / second
+    float speed = 0.1; //3.0f; // 3 units / second
     float mouseSpeed = 0.005f;
 
 
@@ -96,7 +96,7 @@ void UpdateCam(Camera** cam, int WIDTH, int HEIGHT, float deltaTime){
     if(keyboard_state_array[SDL_SCANCODE_LSHIFT])
         speed *= 2.0f;
     else
-        speed = 0.05f;
+        speed = 0.1f;
 
     if (keyboard_state_array[SDL_SCANCODE_A])
         (*cam)->pos -= right * speed * deltaTime; //0.005f;
