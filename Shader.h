@@ -9,6 +9,8 @@
 #include "Camera.h"
 #include "Transform.h"
 
+// Reference: https://github.com/BennyQBD/ModernOpenGLTutorial
+
 class Shader
 {
     public:
@@ -22,7 +24,7 @@ class Shader
 
     private:
         static const unsigned int NUM_SHADERS = 2;
-        static const unsigned int NUM_UNIFORMS = 6;
+        static const unsigned int NUM_UNIFORMS = 10;
         //Shader(const Shader& other){}
         //void Shader& operator=(const Shader& other){}
 

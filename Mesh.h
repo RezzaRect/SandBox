@@ -5,8 +5,11 @@
 #include <GL/glew.h>
 
 #include <string>
+#include <vector>
 #include <glm/glm.hpp>
 #include "obj_loader.h"
+
+// Reference: https://github.com/BennyQBD/ModernOpenGLTutorial
 
 class Vertex
 {
@@ -60,5 +63,10 @@ private:
     GLuint m_vertexArrayBuffers[NUM_BUFFERS];
     unsigned int m_drawCount;
 };
+
+std::vector<IndexedModel> loadModelAssimp(const std::string& fileName);
+
+//std::vector<Mesh> loadModelAssimp(const std::string& fileName);
+
 
 #endif // MESH_H_INCLUDED

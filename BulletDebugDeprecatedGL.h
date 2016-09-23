@@ -3,6 +3,8 @@
 
 #include <btBulletDynamicsCommon.h>
 
+// Reference: http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-a-physics-library/
+
 class BulletDebugDrawer_DeprecatedOpenGL : public btIDebugDraw{
 public:
 	void SetMatrices(glm::mat4 pViewMatrix, glm::mat4 pProjectionMatrix){

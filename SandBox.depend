@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1471862347 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1473325501 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -14,10 +14,13 @@
 	"Geometric_Primitives.h"
 	"Clock.h"
 	"BulletDebugDeprecatedGL.h"
+	"Raycast.h"
+	"BulletPhysics.h"
+	"Model.h"
 	<glm/glm.hpp>
 	<btBulletDynamicsCommon.h>
 
-1471655062 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1472974144 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
@@ -27,29 +30,35 @@
 	<SDL.h>
 	<string>
 
-1471611067 c:\users\michael\desktop\projects\sandbox\shader.h
+1474603646 c:\users\michael\desktop\projects\sandbox\shader.h
 	<string>
 	<GL/glew.h>
 	"Camera.h"
 	"Transform.h"
 
-1471611067 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
+1473325303 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
 	"Shader.h"
+	<SDL.h>
 	<fstream>
 	<iostream>
 
-1471158582 c:\users\michael\desktop\projects\sandbox\mesh.h
+1474603646 c:\users\michael\desktop\projects\sandbox\mesh.h
 	<GL/glew.h>
 	<string>
+	<vector>
 	<glm/glm.hpp>
 	"obj_loader.h"
 
-1471076116 source:c:\users\michael\desktop\projects\sandbox\mesh.cpp
+1473154276 source:c:\users\michael\desktop\projects\sandbox\mesh.cpp
 	"Mesh.h"
 	"obj_loader.h"
 	<vector>
+	<stdio.h>
+	<assimp/Importer.hpp>
+	<assimp/scene.h>
+	<assimp/postprocess.h>
 
-1471843426 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+1472624189 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
 	"Camera.h"
 	<SDL.h>
 
@@ -57,7 +66,7 @@
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 
-1471845419 c:\users\michael\desktop\projects\sandbox\transform.h
+1474603646 c:\users\michael\desktop\projects\sandbox\transform.h
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 	<glm/gtc/matrix_transform.hpp>
@@ -77,13 +86,13 @@
 	<stddef.h>
 	<stdint.h>
 
-1470739725 source:c:\users\michael\desktop\projects\sandbox\texture.cpp
+1472638397 source:c:\users\michael\desktop\projects\sandbox\texture.cpp
 	"Texture.h"
 	"stb_image.h"
 	<cassert>
 	<iostream>
 
-1470739725 c:\users\michael\desktop\projects\sandbox\texture.h
+1474603646 c:\users\michael\desktop\projects\sandbox\texture.h
 	<string>
 	<GL/glew.h>
 
@@ -102,18 +111,18 @@
 	<algorithm>
 	<map>
 
-1471577436 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
+1473154614 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
 	<stdlib.h>
 	"Geometric_Primitives.h"
 
-1471577361 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
+1473148017 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
 	"obj_loader.h"
 	"Mesh.h"
 
-1471319901 c:\users\michael\desktop\projects\sandbox\clock.h
+1474603646 c:\users\michael\desktop\projects\sandbox\clock.h
 	<SDL.h>
 
-1471406468 source:c:\users\michael\desktop\projects\sandbox\particles.cpp
+1473323599 source:c:\users\michael\desktop\projects\sandbox\particles.cpp
 	"Particles.h"
 	"Shader.h"
 	"Transform.h"
@@ -129,6 +138,37 @@
 	<algorithm>
 	"Camera.h"
 
-1471862864 c:\users\michael\desktop\projects\sandbox\bulletdebugdeprecatedgl.h
+1474603647 c:\users\michael\desktop\projects\sandbox\bulletdebugdeprecatedgl.h
 	<btBulletDynamicsCommon.h>
+
+1474603646 c:\users\michael\desktop\projects\sandbox\raycast.h
+	<glm/glm.hpp>
+
+1471941641 source:c:\users\michael\desktop\projects\sandbox\raycast.cpp
+	"Raycast.h"
+
+1471950837 source:c:\users\michael\desktop\projects\sandbox\bulletphysics.cpp
+	"BulletPhysics.h"
+	"Raycast.h"
+
+1474603646 c:\users\michael\desktop\projects\sandbox\bulletphysics.h
+	<vector>
+	<btBulletDynamicsCommon.h>
+	"Camera.h"
+
+1474603733 c:\users\michael\desktop\projects\sandbox\model.h
+	<string>
+	<fstream>
+	<sstream>
+	<iostream>
+	<map>
+	<vector>
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	"stb_image.h"
+	<assimp/Importer.hpp>
+	<assimp/scene.h>
+	<assimp/postprocess.h>
+	"Mesh.h"
 

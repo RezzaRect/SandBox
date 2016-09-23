@@ -1,5 +1,6 @@
 #include "Shader.h"
 
+#include <SDL.h>
 #include <fstream>
 #include <iostream>
 
@@ -36,6 +37,10 @@ Shader::Shader(const std::string& fileName)
 	m_uniforms[3] = glGetUniformLocation(m_program, "viewPos");
 	m_uniforms[4] = glGetUniformLocation(m_program, "CameraRight_worldspace");
 	m_uniforms[5] = glGetUniformLocation(m_program, "CameraUp_worldspace");
+	m_uniforms[6] = glGetUniformLocation(m_program, "diffuseTexture");
+	m_uniforms[7] = glGetUniformLocation(m_program, "specularTexture");
+	m_uniforms[8] = glGetUniformLocation(m_program, "time");
+
 	// Increase size of "m_uniforms[SIZE]" GLuint array make
 	// sure the data passed into update matches these declarations
 	// m_uniforms[2] = glGetUniformLocation(m_program, "Normal");
@@ -72,6 +77,10 @@ void Shader::Update(const Transform& transform, Camera& camera){
     glUniform3f(m_uniforms[3], camera.pos.x, camera.pos.y, camera.pos.z);
     glUniform3f(m_uniforms[4], viewProj[0][0], viewProj[1][0], viewProj[2][0]);
     glUniform3f(m_uniforms[5], viewProj[0][1], viewProj[1][1], viewProj[2][1]);
+    //glUniform1i(m_uniforms[6], 0);
+    //glUniform1i(m_uniforms[7], 1);
+    glUniform1f(m_uniforms[8], SDL_GetTicks()/1000.0);
+
 }
 
 static GLuint CreateShader(const std::string& text, GLenum shaderType){

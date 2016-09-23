@@ -19,7 +19,7 @@ void InitDisplay(SDL_Window** window, SDL_GLContext& context, int width, int hei
 
 
 	//SDL_Window* m_window
-	*window = SDL_CreateWindow("Sand-Box", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+	*window = SDL_CreateWindow("Sand-Box", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL); // | SDL_WINDOW_FULLSCREEN_DESKTOP
 	//SDL_GLContext m_glContext
 	context = SDL_GL_CreateContext(*window);
 
@@ -39,7 +39,7 @@ void InitDisplay(SDL_Window** window, SDL_GLContext& context, int width, int hei
 
 
 	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_FRONT);
+	//glCullFace(GL_BACK);
 }
 
 void Clear(float r, float g, float b, float a){

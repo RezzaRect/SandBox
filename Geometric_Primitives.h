@@ -7,5 +7,6 @@
 IndexedModel setupSphere(float radius, float latitudeBands, float longitudeBands);
 IndexedModel setupCube(float cubeSize);
 IndexedModel setupLowDensityPlane(float planeSize);
+IndexedModel setupHighDensityPlane(int mapSize);
 
 #endif // GEOMETRIC_PRIMITIVES_H_INCLUDED

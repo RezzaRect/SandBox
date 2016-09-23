@@ -62,35 +62,35 @@ IndexedModel setupCube(float cubeSize){
 
     Vertex cubeVertices[] = {
         // FRONT SIDE
-        Vertex(glm::vec3(-cubeSize, -cubeSize, cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
-        Vertex(glm::vec3(cubeSize, -cubeSize, cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
-        Vertex(glm::vec3(cubeSize, cubeSize, cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
-        Vertex(glm::vec3(-cubeSize, cubeSize, cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(-cubeSize, -cubeSize, cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(cubeSize, -cubeSize, cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(cubeSize, cubeSize, cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(-cubeSize, cubeSize, cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
         // RIGHT SIDE
-        Vertex(glm::vec3(cubeSize, cubeSize, cubeSize), glm::vec2(0.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(cubeSize, cubeSize, -cubeSize), glm::vec2(1.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(cubeSize, -cubeSize, -cubeSize), glm::vec2(0.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(cubeSize, -cubeSize, cubeSize), glm::vec2(1.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, cubeSize, cubeSize), glm::vec2(0.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, cubeSize, -cubeSize), glm::vec2(1.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, -cubeSize, -cubeSize), glm::vec2(1.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, -cubeSize, cubeSize), glm::vec2(0.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
         // BACK SIDE
-        Vertex(glm::vec3(-cubeSize, -cubeSize, -cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
-        Vertex(glm::vec3(cubeSize, -cubeSize, -cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
-        Vertex(glm::vec3(cubeSize, cubeSize, -cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
-        Vertex(glm::vec3(-cubeSize, cubeSize, -cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
+        Vertex(glm::vec3(-cubeSize, -cubeSize, -cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
+        Vertex(glm::vec3(cubeSize, -cubeSize, -cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
+        Vertex(glm::vec3(cubeSize, cubeSize, -cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
+        Vertex(glm::vec3(-cubeSize, cubeSize, -cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
         // LEFT SIDE
-        Vertex(glm::vec3(-cubeSize, -cubeSize, -cubeSize), glm::vec2(0.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(-cubeSize, -cubeSize, cubeSize), glm::vec2(1.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(-cubeSize, cubeSize, cubeSize), glm::vec2(0.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(-cubeSize, cubeSize, -cubeSize), glm::vec2(1.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, -cubeSize, -cubeSize), glm::vec2(0.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, -cubeSize, cubeSize), glm::vec2(1.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, cubeSize, cubeSize), glm::vec2(1.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, cubeSize, -cubeSize), glm::vec2(0.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
         // UPPER SIDE
-        Vertex(glm::vec3(cubeSize, cubeSize, cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(-cubeSize, cubeSize, cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(-cubeSize, cubeSize, -cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(cubeSize, cubeSize, -cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, cubeSize, cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, cubeSize, cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, cubeSize, -cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, cubeSize, -cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
         // BOTTOM SIDE
-        Vertex(glm::vec3(-cubeSize, -cubeSize, -cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
-        Vertex(glm::vec3(cubeSize, -cubeSize, -cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
-        Vertex(glm::vec3(cubeSize, -cubeSize, cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
-        Vertex(glm::vec3(-cubeSize, -cubeSize, cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, -cubeSize, -cubeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, -cubeSize, -cubeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
+        Vertex(glm::vec3(cubeSize, -cubeSize, cubeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
+        Vertex(glm::vec3(-cubeSize, -cubeSize, cubeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
     };
     unsigned int indices[] = { 0,  1,  2,  0,  2,  3,   //front
                                4,  5,  6,  4,  6,  7,   //right
@@ -122,10 +122,10 @@ IndexedModel setupLowDensityPlane(float planeSize){
 
     Vertex planeVertices[] = {
         // BOTTOM SIDE
-        Vertex(glm::vec3(-planeSize, -planeSize, -planeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(planeSize, -planeSize, -planeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(planeSize, -planeSize, planeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(-planeSize, -planeSize, planeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-planeSize, -planeSize, -planeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(planeSize, -planeSize, -planeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(planeSize, -planeSize, planeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-planeSize, -planeSize, planeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
     };
     unsigned int indices[] = { 0,  1,  2,  0,  2,  3 };
 
@@ -141,5 +141,39 @@ IndexedModel setupLowDensityPlane(float planeSize){
     for(int i = 0; i < indicesSize; i++)
         model.indices.push_back(indices[i]);
 
+    return model;
+}
+
+IndexedModel setupHighDensityPlane(int mapSize){
+    IndexedModel model;
+
+    for(int i = -mapSize; i <= mapSize; i++){
+
+        for(int j = -mapSize; j <= mapSize; j++){
+            int index = model.positions.size();//model.normals.size()+model.positions.size();//+model.texCoords.size(); //.size(); //(model.positions.size() + model.normals.size() + model.texCoords.size());
+
+            model.positions.push_back(glm::vec3(-0.5f + i, 0.0f, -0.5f + j));
+            model.positions.push_back(glm::vec3(+0.5f + i, 0.0f, -0.5f + j));
+            model.positions.push_back(glm::vec3(+0.5f + i, 0.0f, +0.5f + j));
+            model.positions.push_back(glm::vec3(-0.5f + i, 0.0f, +0.5f + j));
+
+            model.texCoords.push_back(glm::vec2(0.0f, 0.0f));
+            model.texCoords.push_back(glm::vec2(1.0f, 0.0f));
+            model.texCoords.push_back(glm::vec2(1.0f, 1.0f));
+            model.texCoords.push_back(glm::vec2(0.0f, 1.0f));
+
+            model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+            model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+            model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+            model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+
+            model.indices.push_back(index+0);
+            model.indices.push_back(index+3);
+            model.indices.push_back(index+2);
+            model.indices.push_back(index+2);
+            model.indices.push_back(index+1);
+            model.indices.push_back(index+0);
+        }
+    }
     return model;
 }

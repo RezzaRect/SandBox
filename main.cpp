@@ -15,7 +15,9 @@
 #include "Geometric_Primitives.h"
 #include "Clock.h"
 #include "BulletDebugDeprecatedGL.h"
-
+#include "Raycast.h"
+#include "BulletPhysics.h"
+#include "Model.h"
 // Include GLM
 #include <glm/glm.hpp>
 
@@ -49,22 +51,8 @@ int main(int argc, char** argv)
     glm::vec3 UP(0.0f, 1.0f, 0.0f);
     glm::vec3 FORWARD(0.0f, 0.0f, 1.0f);
 
-
-    /* ------------- START BULLET INITIALIZATION ------------------- */
-    // Build the broadphase
-	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-
-	// Set up the collision configuration and dispatcher
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-	// The actual physics solver
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-
-	// The world.
-	btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0,-9.81f,0));
-    /* ------------- END BULLET INITIALIZATION ------------------- */
+	// Initialize The physics world.
+	btDiscreteDynamicsWorld* dynamicsWorld = intitBullet(-9.81f);
 
 
     std::vector<btRigidBody*> rigidbodies;
@@ -72,14 +60,27 @@ int main(int argc, char** argv)
 	// A box of 2m*2m*2m (1.0 is the half-extent !)
 	btCollisionShape* boxCollisionShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 
-    srand(time(NULL));
+    //srand(time(NULL));
 
 	// Generate positions & rotations for MAX_OBJECTS
 	std::vector<glm::vec3> positions(MAX_OBJECTS);
 	std::vector<glm::quat> orientations(MAX_OBJECTS);
+	float wallX = -34;
+	float wallY = -13;
+    float wallZ = 20;
 	for(int i=0; i<MAX_OBJECTS; i++){
-		positions[i] = glm::vec3(rand()%20-10, rand()%20+30, rand()%20-10);
-		orientations[i] = glm::normalize(glm::quat(glm::vec3(rand()%360, rand()%360, rand()%360)));
+		positions[i] = glm::vec3(wallX, wallY, wallZ);
+		orientations[i] = glm::normalize(glm::quat(glm::vec3(0, 0, 0)));
+		wallX++;
+		if(i % 10 == 0){
+            wallX -= 10;
+            wallY+=1.1;
+		}
+		if(i%55 == 0){
+            //wallZ+=12.0;
+            wallY = -13;
+            wallX +=25;
+		}
 	}
 
 	for(int i=0; i<MAX_OBJECTS; i++){
@@ -105,7 +106,7 @@ int main(int argc, char** argv)
 
 		rigidBody->setFriction(.5f);
 		rigidBody->setRollingFriction(.5f);
-		rigidBody->setRestitution(1.3f);
+		//rigidBody->setRestitution(1.1f);
 
 		rigidbodies.push_back(rigidBody);
 		dynamicsWorld->addRigidBody(rigidBody);
@@ -120,43 +121,72 @@ int main(int argc, char** argv)
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -15, 0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    //groundRigidBody->setRestitution(1.0f);
     dynamicsWorld->addRigidBody(groundRigidBody);
 
     *cam = InitCamera(70.f, (float)WIDTH/(float)HEIGHT, 0.01f, 1000.0f, //256.0f
                      glm::vec3(0.0f, -5.0f, -15.0f), FORWARD, UP);
 
+	//Loading textures from file...
 	Shader shader("./res/basicShader");
-    Texture texture("./res/lvv.jpg");
-    Texture texture2("./res/bricks.jpg");
+    Texture texture("./res/container2.png"); //lvv.jpg
+    Texture texture2("./res/container2_specular.png"); // bricks.jpg
     Texture texture3("./res/soccer3.jpg");
     Texture bamboo("./res/bamboo.jpg");
-
-
+    Texture gunTex("./res/models/normal_up.jpg");
+    //Load models from file...
     Mesh mesh1("res/monkey3.obj");
+    Model nano("./res/models/nanosuit.obj");
+
     //Mesh cube(cubeVertices, sizeof(cubeVertices)/sizeof(cubeVertices[0]), cubeIndices, sizeof(cubeIndices)/sizeof(cubeIndices[0]));
     Transform transform;
     Transform planeTransform;
+    Transform modelTransform;
+
     IndexedModel sph = setupSphere(1.0f, 15.f, 15.f);
     Mesh sphere(sph);
+
     IndexedModel cc = setupCube(1.0f);
     Mesh cube(cc);
-    IndexedModel pl = setupLowDensityPlane(30.0f);
+
+    IndexedModel pl = setupHighDensityPlane(10.0f); //setupLowDensityPlane(30.0f);
     Mesh plane(pl);
+
+    //IndexedModel nano =
+    //Mesh dummieVar(pl);
+    //std::vector<IndexedModel> nanosuit = loadModelAssimp("nanosuit.obj"); //nanosuit(nano);
+    //std::vector<Mesh*> nanoMeshes;//[nanosuit.size()] ;
+    //for(unsigned int i = 0; i < nanosuit.size(); i++)
+        //nanoMeshes.push_back(new Mesh(nanosuit[i]));
 
     double lastTime = SDL_GetTicks()/1000;
     float previousTicks = SDL_GetTicks();
     int nbFrames = 0;
     Clock clock;
-    //float counter = 0.0f;
+    float counter = 0.0f;
+
 
 #ifdef DEBUG_RENDERER
     BulletDebugDrawer_DeprecatedOpenGL mydebugdrawer;
     dynamicsWorld->setDebugDrawer(&mydebugdrawer);
 #endif // DEBUG_RENDERER
-    int quatPrint = 0;
+
+    int sphereLimiter = 0;
+    int sphereAdded = 0;
+    float modelSpread = 0.0f;
+    printf("Model contains %d textures\n", nano.textures.size());
+    printf("Names of textures...\n\n");
+
+    // Print out the all the model's texture strings...
+    for(unsigned int i = 0; i < nano.textures.size(); i++){
+        string name = nano.textures[i].type;
+        printf("%d Type: %s\n", i, name.c_str());
+    }
+
 	while(!glDisplay.isClosed){
         Clear(0.0f, 0.15f, 0.3f, 1.0f);
-        quatPrint++;
+        modelSpread += 0.01f;
+        sphereLimiter++;
         float newTicks = SDL_GetTicks();
 		float delta = newTicks - previousTicks;
 		previousTicks = newTicks;
@@ -166,7 +196,7 @@ int main(int argc, char** argv)
 
         //transform.GetPos()->x = sinf(counter);
 #ifdef PHYSICS_TEST
-        dynamicsWorld->stepSimulation(1.0 / 60.0f, MAX_PHYSICS_STEPS);
+        dynamicsWorld->stepSimulation((1.0f / 60.0f)*totalDeltaTime, MAX_PHYSICS_STEPS);
 #endif // PHYSICS_TEST
 
         shader.Bind();
@@ -174,13 +204,15 @@ int main(int argc, char** argv)
         UpdateCam(&cam, WIDTH, HEIGHT, totalDeltaTime);
         glm::vec3 translate(0.0f,0.0f,0.0f);
         texture.Bind(0);
+        texture2.Bind(1);
         //glPolygonMode(GL_FRONT, GL_LINE);
         //glPolygonMode(GL_BACK, GL_LINE);
 
-        for(int i = 0; i < MAX_OBJECTS; i++){
+        for(int i = 0; i < MAX_OBJECTS + sphereAdded; i++){
             // Set Positions
             btVector3 btpos = rigidbodies[i]->getCenterOfMassPosition();
             glm::vec3 pos(btpos.x(), btpos.y(), btpos.z());
+            //glm::vec3 pp(0.0, -4.0, 0.0);
             transform.SetPos(pos);
 
             // Set Rotations
@@ -190,11 +222,25 @@ int main(int argc, char** argv)
                          mrot[2][0], mrot[2][1], mrot[2][2], 0.0f,
                          0.0f,       0.0f,       0.0f,       1.0f);
             transform.SetRot(qq);
+            //glm::vec3 ss(0.25);
+            //transform.SetScale(ss);
 
             // Update the model transform and camera matrices for the shader
             shader.Update(transform, *cam);
 #ifdef PHYSICS_TEST
-            cube.Draw();
+            //float distCull = glm::length(pos - cam->pos);
+            //float cosTheta = glm::dot(cam->forward, glm::normalize(pos - cam->pos));
+            //float theta = glm::acos(cosTheta);
+            //glm::abs(theta) <= cam->fov ||
+            //if(distCull < 60.0f){
+
+                if(i < MAX_OBJECTS)
+                    cube.Draw();
+                else{
+                    texture3.Bind(0);
+                    sphere.Draw();
+                }
+            //}
 #endif // PHYSICS_TEST
 
 #ifndef PHYSICS_TEST
@@ -214,16 +260,55 @@ int main(int argc, char** argv)
 
         }
 
-        glm::vec3 planePosition(0.0f, 15.9f, 0.0f);
+        glm::vec3 planePosition(0.0f, -14.0f, 0.0f);
         planeTransform.SetPos(planePosition);
+        //glm::vec3 sc(5.0f);
+        //planeTransform.SetScale(sc);
         shader.Update(planeTransform, *cam);
         bamboo.Bind(0);
         plane.Draw();
+
+        //planePosition.y -= 30.;
+        //planePosition.x += 20.;
+        //planeTransform.SetPos(planePosition);
+        //shader.Update(planeTransform, *cam);
+
+        counter+=0.01f;
+        shader.Update(modelTransform, *cam);
+        glm::vec3 modelMeshPositions(0.0, 8.0, 0.0);
+        glm::mat4 rot3d(1.0f);
+        rot3d*=glm::rotate(counter, glm::vec3(0.0, 1.0, 0.0) );
+        modelTransform.SetRot(rot3d);
+
+        shader.Update(modelTransform, *cam);
+
+        modelMeshPositions=glm::vec3(8.0f, -8.0f, 0.0);
+        modelTransform.SetPos(modelMeshPositions);
+        shader.Update(modelTransform, *cam);
+
+
+        nano.Draw();
 
 #ifdef DEBUG_RENDERER
         mydebugdrawer.SetMatrices(GetView(*cam), cam->projection);
         dynamicsWorld->debugDrawWorld();
 #endif // DEBUG_RENDERER
+
+        // PICKING IS DONE HERE
+		SDL_PumpEvents();
+		glm::vec3 push = glm::normalize(cam->forward);
+        if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)){
+            int i = getPhysicsObjIndex(&dynamicsWorld, &cam);
+            rigidbodies[i]->setActivationState(1.0f);
+            rigidbodies[i]->applyCentralImpulse(btVector3(-push.x, -push.y, -push.z));
+        } else if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)){
+            if(sphereLimiter >= 20){
+                btRigidBody* sphere=addSphere(1.0, cam->pos.x, cam->pos.y, cam->pos.z, 1.0, &dynamicsWorld, rigidbodies);
+                sphere->setLinearVelocity(btVector3(push.x,push.y,push.z)*75.0f);
+                sphereLimiter = 0;
+                sphereAdded++;
+            }
+        }
 
 
         UpdateDisplay(&glDisplay.window, glDisplay.glContext, glDisplay);

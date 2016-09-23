@@ -9,6 +9,8 @@
 
 #include "Camera.h"
 
+// Reference: https://github.com/BennyQBD/ModernOpenGLTutorial
+
 struct Transform
 {
 public:
@@ -23,7 +25,7 @@ public:
 	{
 		glm::mat4 posMat = glm::translate(pos);
 		glm::mat4 scaleMat = glm::scale(scale);
-		// not sure if the inverse or transpose is better
+		// not sure if the inverse or transpose is better to use here
 		glm::mat4 rotMat = glm::inverse(rot);
 
 		return posMat * rotMat * scaleMat;

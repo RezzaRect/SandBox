@@ -6,6 +6,7 @@
 
 Texture::Texture(const std::string& fileName)
 {
+    retStr = fileName;
     int width, height, numComponents;
     unsigned char* data = stbi_load((fileName).c_str(), &width, &height, &numComponents, 4);
 

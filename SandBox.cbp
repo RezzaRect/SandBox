@@ -35,6 +35,8 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="BulletDebugDeprecatedGL.h" />
+		<Unit filename="BulletPhysics.cpp" />
+		<Unit filename="BulletPhysics.h" />
 		<Unit filename="Camera.cpp" />
 		<Unit filename="Camera.h" />
 		<Unit filename="Clock.h" />
@@ -44,8 +46,11 @@
 		<Unit filename="Geometric_Primitives.h" />
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Mesh.h" />
+		<Unit filename="Model.h" />
 		<Unit filename="Particles.cpp" />
 		<Unit filename="Particles.h" />
+		<Unit filename="Raycast.cpp" />
+		<Unit filename="Raycast.h" />
 		<Unit filename="Shader.cpp" />
 		<Unit filename="Shader.h" />
 		<Unit filename="Texture.cpp" />
@@ -58,6 +63,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="stb_image.h" />
+		<Unit filename="stb_perlin.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
+// Reference: https://github.com/gingerBill/Dunjun
+
 struct Clock
 {
 public:
