@@ -5,25 +5,10 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 
-#include "Display.h"
-#include "Mesh.h"
-#include "Shader.h"
-#include "Camera.h"
-#include "Transform.h"
-#include "Texture.h"
-//#include "obj_loader.h"
-#include "Geometric_Primitives.h"
-#include "Clock.h"
-#include "BulletDebugDeprecatedGL.h"
-//#include "Raycast.h"
-#include "BulletPhysics.h"
-//#include "Model.h"
-#include "Particle_Emitter.h"
+#include "project_includes.h"
 
 // Include GLM
 #include <glm/glm.hpp>
-
-#include <btBulletDynamicsCommon.h>
 
 #define PHYSICS_TEST
 #define DEBUG_RENDERER
@@ -42,21 +27,20 @@ const int MAX_PHYSICS_STEPS = 7;
 //const float MAX_DELTA_TIME = 1.0f;
 const float DESIRED_FRAMETIME = MS_PER_FRAME / DESIRED_FPS;
 
-//static Display glDisplay;
 
 int main(int argc, char** argv)
 {
-    //glDisplay->isClosed = false;
 
     Transform* bulletTransform = new Transform;
-
     Display* glDisplay = new Display;
+    Camera* cam = new Camera;
+
 	InitDisplay(&glDisplay, WIDTH, HEIGHT);
 
-    Camera* cam = new Camera;
     glm::vec3 UP(0.0f, 1.0f, 0.0f);
     glm::vec3 FORWARD(0.0f, 0.0f, 1.0f);
-
+    *cam = InitCamera(70.f, (float)WIDTH/(float)HEIGHT, 0.01f, 1000.0f, //256.0f
+                         glm::vec3(0.0f, -5.0f, -15.0f), FORWARD, UP);
 
     glm::vec3 sp = glm::vec3(0.0, 10.0, 0.0);
     glm::ivec3 white = glm::vec3(255.0);
@@ -67,26 +51,10 @@ int main(int argc, char** argv)
 
 	// Initialize The physics world.
 	btDiscreteDynamicsWorld* dynamicsWorld = intitBullet(-9.81f);
-
-
+    // vector array to store all bullet physics objects
     std::vector<btRigidBody*> rigidbodies;
 
-	// A box of 2m*2m*2m (1.0 is the half-extent !)  width
-	//btCollisionShape* boxCollisionShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
-
-    //srand(time(NULL));
-
-	// Generate positions & rotations for MAX_OBJECTS
-	std::vector<glm::vec3> positions(MAX_OBJECTS);
-	std::vector<glm::quat> orientations(MAX_OBJECTS);
-	std::vector<glm::vec3> rectDimensions(MAX_OBJECTS);
-	std::vector<Mesh*> planks; //(MAX_OBJECTS);
-
-
-    *cam = InitCamera(70.f, (float)WIDTH/(float)HEIGHT, 0.01f, 1000.0f, //256.0f
-                     glm::vec3(0.0f, -5.0f, -15.0f), FORWARD, UP);
-
-	//Loading textures from file...
+	//Loading textures and shaders from file...
 	Shader shader("./res/basicShader");
 	Shader particleShader("./res/particleShader");
     Texture texture("./res/container2.png"); //lvv.jpg
@@ -95,12 +63,7 @@ int main(int argc, char** argv)
     Texture bamboo("./res/bamboo.jpg");
     Texture gunTex("./res/models/normal_up.jpg");
     Texture particleTexture("./res/Cloud-particle.png");
-    //Load models from file...
-    //Mesh mesh1("res/monkey3.obj");
-    //Model nano("./res/models/nanosuit.obj");
 
-    //Mesh cube(cubeVertices, sizeof(cubeVertices)/sizeof(cubeVertices[0]), cubeIndices, sizeof(cubeIndices)/sizeof(cubeIndices[0]));
-    Transform transform;
     Transform planeTransform;
     Transform modelTransform;
 
@@ -162,7 +125,6 @@ int main(int argc, char** argv)
         particles->UpdateParticles(&cam, .016f);
         particles1->UpdateParticles(&cam, .016f);
 
-        //transform.GetPos()->x = sinf(counter);
 #ifdef PHYSICS_TEST
         dynamicsWorld->stepSimulation((1.0f / 60.0f)*totalDeltaTime, MAX_PHYSICS_STEPS);
 #endif // PHYSICS_TEST

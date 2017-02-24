@@ -1,22 +1,11 @@
 # depslib dependency file v1.0
-1487976000 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1487977835 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
 	<SDL.h>
-	"Display.h"
-	"Mesh.h"
-	"Shader.h"
-	"Camera.h"
-	"Transform.h"
-	"Texture.h"
-	"Geometric_Primitives.h"
-	"Clock.h"
-	"BulletDebugDeprecatedGL.h"
-	"BulletPhysics.h"
-	"Particle_Emitter.h"
+	"project_includes.h"
 	<glm/glm.hpp>
-	<btBulletDynamicsCommon.h>
 
 1487051997 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
@@ -186,4 +175,17 @@
 
 1473320363 c:\users\michael\desktop\projects\sandbox\stb_perlin.h
 	<math.h>
+
+1487977449 c:\users\michael\desktop\projects\sandbox\project_includes.h
+	"Display.h"
+	"Mesh.h"
+	"Shader.h"
+	"Camera.h"
+	"Transform.h"
+	"Texture.h"
+	"Geometric_Primitives.h"
+	"Clock.h"
+	"BulletDebugDeprecatedGL.h"
+	"BulletPhysics.h"
+	"Particle_Emitter.h"
 
