@@ -40,12 +40,13 @@ const int MAX_PHYSICS_STEPS = 7;
 //const float MAX_DELTA_TIME = 1.0f;
 const float DESIRED_FRAMETIME = MS_PER_FRAME / DESIRED_FPS;
 
-static Display glDisplay;
+//static Display glDisplay;
 
 int main(int argc, char** argv)
 {
-    glDisplay.isClosed = false;
-	InitDisplay(&glDisplay.window, glDisplay.glContext, WIDTH, HEIGHT);
+    //glDisplay->isClosed = false;
+    Display* glDisplay = new Display;
+	InitDisplay(&glDisplay, WIDTH, HEIGHT);
 
     Camera* cam = new Camera;
     glm::vec3 UP(0.0f, 1.0f, 0.0f);
@@ -222,7 +223,7 @@ int main(int argc, char** argv)
         //printf("%d Type: %s\n", i, name.c_str());
     //}
 
-	while(!glDisplay.isClosed){
+	while(!glDisplay->isClosed){
         Clear(0.0f, 0.15f, 0.3f, 1.0f);
         modelSpread += 0.01f;
         sphereLimiter++;
@@ -349,7 +350,7 @@ int main(int argc, char** argv)
 
         // PICKING IS DONE HERE
 		SDL_PumpEvents();
-		glm::vec3 push = glm::normalize(cam->forward);
+		glm::vec3 push = glm::normalize(cam->viewDir);
         if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)){
             int i = getPhysicsObjIndex(&dynamicsWorld, &cam);
             rigidbodies[i]->setActivationState(1.0f);
@@ -364,7 +365,7 @@ int main(int argc, char** argv)
         }
 
 
-        UpdateDisplay(&glDisplay.window, glDisplay.glContext, glDisplay);
+        UpdateDisplay(&glDisplay, "Updated");
         // Measure Speed
         double currentTime = SDL_GetTicks()/1000;
         nbFrames++;
@@ -384,7 +385,7 @@ int main(int argc, char** argv)
         clock.restart();
 	}
 
-	CloseWindow(glDisplay.window, glDisplay.glContext);
+	CloseWindow(&glDisplay);
 	delete cam;
 
     return 0;

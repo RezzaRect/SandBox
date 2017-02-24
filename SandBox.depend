@@ -1,11 +1,10 @@
 # depslib dependency file v1.0
-1487916872 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1487924166 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
 	<SDL.h>
 	"Display.h"
-	"Mesh.h"
 	"Shader.h"
 	"Camera.h"
 	"Transform.h"
@@ -20,12 +19,12 @@
 	<glm/glm.hpp>
 	<btBulletDynamicsCommon.h>
 
-1482175721 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1487051997 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
 
-1482107620 c:\users\michael\desktop\projects\sandbox\display.h
+1482125324 c:\users\michael\desktop\projects\sandbox\display.h
 	<GL/glew.h>
 	<SDL.h>
 	<string>
@@ -58,11 +57,12 @@
 	<assimp/scene.h>
 	<assimp/postprocess.h>
 
-1472620589 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+1486451483 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
 	"Camera.h"
 	<SDL.h>
+	<glm/gtx/rotate_vector.hpp>
 
-1471308611 c:\users\michael\desktop\projects\sandbox\camera.h
+1486329625 c:\users\michael\desktop\projects\sandbox\camera.h
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 

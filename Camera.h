@@ -18,20 +18,22 @@ struct Camera
     float zNear;
     float zFar;
 
+    glm::vec3 camVel;
     glm::mat4 projection;
 	glm::vec3 pos;
-	glm::vec3 forward;
+	glm::vec3 viewDir;
 	glm::vec3 up;
 };
 
 glm::mat4 CreateProjection(Camera& cam);//, glm::vec3& position
 
 Camera InitCamera(float fov, float aspect, float zNear, float zFar,
-                  glm::vec3 pos, glm::vec3 forward, glm::vec3 up);
+                  glm::vec3 pos, glm::vec3 viewDir, glm::vec3 up);
 
 glm::mat4 GetView(Camera& cam);
 glm::mat4 GetViewProjection(Camera& cam);
 
+float calcRoll(glm::vec3 velVec);
 void MoveForward(glm::vec3* p, float amount);
 void MoveBackward(glm::vec3* p, float amount);
 void MoveRight(glm::vec3* p, float amount);

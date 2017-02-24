@@ -11,15 +11,16 @@
 struct Display
 {
     SDL_Window* window;
-    SDL_GLContext glContext;
+    SDL_GLContext* glContext;
     bool isClosed;
 };
 
-void InitDisplay(SDL_Window** window, SDL_GLContext& context, int width, int height);
+void InitDisplay(Display** disp, int width, int height);
 void Clear(float r, float g, float b, float a);
-void SwapBuffers(SDL_Window* w, SDL_GLContext c);
-void CloseWindow(SDL_Window* w, SDL_GLContext c);
-void UpdateDisplay(SDL_Window** w, SDL_GLContext& c, Display& disp);
+void SwapBuffers(Display** disp);
+void CloseWindow(Display** disp);
+void UpdateDisplay(Display** disp, char* title);
+void BindAsRenderTarget(int width, int height);
 
 #endif // DISPLAY_H_INCLUDED
 
