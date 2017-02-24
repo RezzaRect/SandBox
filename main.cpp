@@ -55,14 +55,15 @@ int main(int argc, char** argv)
     std::vector<btRigidBody*> rigidbodies;
 
 	//Loading textures and shaders from file...
-	Shader shader("./res/basicShader");
-	Shader particleShader("./res/particleShader");
-    Texture texture("./res/container2.png"); //lvv.jpg
-    Texture texture2("./res/container2_specular.png"); // bricks.jpg
-    Texture texture3("./res/soccer3.jpg");
-    Texture bamboo("./res/bamboo.jpg");
-    Texture gunTex("./res/models/normal_up.jpg");
-    Texture particleTexture("./res/Cloud-particle.png");
+	Shader shader("./res/shaders/basicShader");
+	Shader particleShader("./res/shaders/particleShader");
+    Texture texture("./res/textures/container2.png"); //lvv.jpg
+    Texture texture2("./res/textures/container2_specular.png"); // bricks.jpg
+    Texture texture3("./res/textures/soccer3.jpg");
+    Texture bamboo("./res/textures/bamboo.jpg");
+    //Texture gunTex("./res/models/normal_up.jpg");
+    Texture particleTexture("./res/textures/Cloud-particle.png");
+    Texture particleTexture2("./res/textures/pss.png");
 
     Transform planeTransform;
     Transform modelTransform;
@@ -103,8 +104,11 @@ int main(int argc, char** argv)
         //printf("%d Type: %s\n", i, name.c_str());
     //}
 
+    SDL_ShowCursor(SDL_DISABLE);
+
 	while(!glDisplay->isClosed){
-        Clear(0.0f, 0.15f, 0.3f, 1.0f);
+        //Clear(0.0f, 0.15f, 0.3f, 1.0f);
+        Clear(0.0f, 0.0f, 0.0f, 1.0f);
         glDisable(GL_BLEND);
 
         modelSpread += 0.01f;
@@ -225,7 +229,7 @@ int main(int argc, char** argv)
         particleShader.Bind();
 
         particles->RenderParticles();
-        //particleTexture2.Bind(0);
+        particleTexture2.Bind(0);
         particles1->RenderParticles();
 
 

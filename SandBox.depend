@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1487977835 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1487980301 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -7,7 +7,7 @@
 	"project_includes.h"
 	<glm/glm.hpp>
 
-1487051997 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1487979953 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
