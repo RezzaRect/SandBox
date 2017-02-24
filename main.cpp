@@ -15,7 +15,7 @@
 #include "Geometric_Primitives.h"
 #include "Clock.h"
 #include "BulletDebugDeprecatedGL.h"
-#include "Raycast.h"
+//#include "Raycast.h"
 #include "BulletPhysics.h"
 #include "Model.h"
 // Include GLM
@@ -45,6 +45,9 @@ const float DESIRED_FRAMETIME = MS_PER_FRAME / DESIRED_FPS;
 int main(int argc, char** argv)
 {
     //glDisplay->isClosed = false;
+
+    Transform* bulletTransform = new Transform;
+
     Display* glDisplay = new Display;
 	InitDisplay(&glDisplay, WIDTH, HEIGHT);
 
@@ -357,8 +360,10 @@ int main(int argc, char** argv)
             rigidbodies[i]->applyCentralImpulse(btVector3(-push.x, -push.y, -push.z));
         } else if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)){
             if(sphereLimiter >= 20){
-                btRigidBody* sphere=addSphere(1.0, cam->pos.x, cam->pos.y, cam->pos.z, 1.0, &dynamicsWorld, rigidbodies);
-                sphere->setLinearVelocity(btVector3(push.x,push.y,push.z)*75.0f);
+                //btRigidBody* sphere=addSphere(1.0, cam->pos.x, cam->pos.y, cam->pos.z, 1.0, &dynamicsWorld, rigidbodies);
+                //sphere->setLinearVelocity(btVector3(push.x,push.y,push.z)*75.0f);
+                //addSphere(1.0f, cam->pos, push, 1.0f, &btDynamicsWorld, rigidbodies, sphereAdded);
+                addSphere(1.0, cam->pos, push, 1.0, &dynamicsWorld, rigidbodies, sphereAdded);
                 sphereLimiter = 0;
                 sphereAdded++;
             }

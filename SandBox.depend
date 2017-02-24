@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1487925896 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1487929181 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -13,7 +13,6 @@
 	"Geometric_Primitives.h"
 	"Clock.h"
 	"BulletDebugDeprecatedGL.h"
-	"Raycast.h"
 	"BulletPhysics.h"
 	"Model.h"
 	<glm/glm.hpp>
@@ -144,14 +143,14 @@
 1471938041 source:c:\users\michael\desktop\projects\sandbox\raycast.cpp
 	"Raycast.h"
 
-1471947237 source:c:\users\michael\desktop\projects\sandbox\bulletphysics.cpp
+1487911789 source:c:\users\michael\desktop\projects\sandbox\bulletphysics.cpp
 	"BulletPhysics.h"
-	"Raycast.h"
 
-1474600046 c:\users\michael\desktop\projects\sandbox\bulletphysics.h
+1487911730 c:\users\michael\desktop\projects\sandbox\bulletphysics.h
 	<vector>
 	<btBulletDynamicsCommon.h>
 	"Camera.h"
+	"Transform.h"
 
 1474600133 c:\users\michael\desktop\projects\sandbox\model.h
 	<string>

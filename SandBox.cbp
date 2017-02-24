@@ -48,16 +48,12 @@
 		<Unit filename="Model.h" />
 		<Unit filename="Particles.cpp" />
 		<Unit filename="Particles.h" />
-		<Unit filename="Raycast.cpp" />
-		<Unit filename="Raycast.h" />
 		<Unit filename="Shader.cpp" />
 		<Unit filename="Shader.h" />
 		<Unit filename="Texture.cpp" />
 		<Unit filename="Texture.h" />
 		<Unit filename="Transform.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="obj_loader.cpp" />
-		<Unit filename="obj_loader.h" />
 		<Unit filename="stb_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
