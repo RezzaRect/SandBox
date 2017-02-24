@@ -6,6 +6,7 @@
 //setup err create..?
 IndexedModel setupSphere(float radius, float latitudeBands, float longitudeBands);
 IndexedModel setupCube(float cubeSize);
+IndexedModel setupRectangularCube(float width, float height, float depth);
 IndexedModel setupLowDensityPlane(float planeSize);
 IndexedModel setupHighDensityPlane(int mapSize);
 

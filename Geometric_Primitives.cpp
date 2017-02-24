@@ -117,6 +117,66 @@ IndexedModel setupCube(float cubeSize){
     return model;
 }
 
+IndexedModel setupRectangularCube(float width, float height, float depth){
+    IndexedModel model;
+
+    Vertex cubeVertices[] = {
+        // FRONT SIDE
+        Vertex(glm::vec3(-width, -height, depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(width, -height, depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(width, height, depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(-width, height, depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
+        // RIGHT SIDE
+        Vertex(glm::vec3(width, height, depth), glm::vec2(0.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(width, height, -depth), glm::vec2(1.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(width, -height, -depth), glm::vec2(1.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(width, -height, depth), glm::vec2(0.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
+        // BACK SIDE
+        Vertex(glm::vec3(-width, -height, -depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
+        Vertex(glm::vec3(width, -height, -depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
+        Vertex(glm::vec3(width, height, -depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
+        Vertex(glm::vec3(-width, height, -depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
+        // LEFT SIDE
+        Vertex(glm::vec3(-width, -height, -depth), glm::vec2(0.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(-width, -height, depth), glm::vec2(1.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(-width, height, depth), glm::vec2(1.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
+        Vertex(glm::vec3(-width, height, -depth), glm::vec2(0.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
+        // UPPER SIDE
+        Vertex(glm::vec3(width, height, depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-width, height, depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-width, height, -depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(width, height, -depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        // BOTTOM SIDE
+        Vertex(glm::vec3(-width, -height, -depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
+        Vertex(glm::vec3(width, -height, -depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
+        Vertex(glm::vec3(width, -height, depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
+        Vertex(glm::vec3(-width, -height, depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
+    };
+    unsigned int indices[] = { 0,  1,  2,  0,  2,  3,   //front
+                               4,  5,  6,  4,  6,  7,   //right
+                               8,  9,  10, 8,  10, 11,  //back
+                               12, 13, 14, 12, 14, 15,  //left
+                               16, 17, 18, 16, 18, 19,  //upper
+                               20, 21, 22, 20, 22, 23}; //bottom
+
+    int vertSize = sizeof(cubeVertices) / sizeof(cubeVertices[0]);
+    int indicesSize = sizeof(indices) / sizeof(indices[0]);
+
+    for(int i = 0; i < vertSize; i++){
+        model.normals.push_back(*cubeVertices[i].GetNormal());
+        model.texCoords.push_back(*cubeVertices[i].GetTexCoord());
+        model.positions.push_back(*cubeVertices[i].GetPos());
+    }
+
+    for(int i = 0; i < indicesSize; i++)
+        model.indices.push_back(indices[i]);
+
+    //return Mesh mesh(cubeVertices, sizeof(cubeVertices)/sizeof(cubeVertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
+
+    //return mesh;
+    return model;
+}
+
 IndexedModel setupLowDensityPlane(float planeSize){
     IndexedModel model;
 

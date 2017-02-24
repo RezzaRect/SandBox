@@ -6,7 +6,7 @@
 #include <SDL.h>
 
 #include "Display.h"
-#include "Mesh.h"
+//#include "Mesh.h"
 #include "Shader.h"
 #include "Camera.h"
 #include "Transform.h"
@@ -35,7 +35,7 @@ const float DESIRED_FPS = 60.0f;
 // Just for frame time or rendering
 const float FRAME_CAP = 60.0f;
 const float MS_PER_FRAME = 1000.0f;
-const int MAX_OBJECTS = 200;
+const int MAX_OBJECTS = 175;
 const int MAX_PHYSICS_STEPS = 7;
 //const float MAX_DELTA_TIME = 1.0f;
 const float DESIRED_FRAMETIME = MS_PER_FRAME / DESIRED_FPS;
@@ -57,17 +57,26 @@ int main(int argc, char** argv)
 
     std::vector<btRigidBody*> rigidbodies;
 
-	// A box of 2m*2m*2m (1.0 is the half-extent !)
-	btCollisionShape* boxCollisionShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+	// A box of 2m*2m*2m (1.0 is the half-extent !)  width
+	//btCollisionShape* boxCollisionShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 
     //srand(time(NULL));
 
 	// Generate positions & rotations for MAX_OBJECTS
 	std::vector<glm::vec3> positions(MAX_OBJECTS);
 	std::vector<glm::quat> orientations(MAX_OBJECTS);
+	std::vector<glm::vec3> rectDimensions(MAX_OBJECTS);
+	std::vector<Mesh*> planks; //(MAX_OBJECTS);
 	float wallX = -34;
 	float wallY = -13;
     float wallZ = 20;
+    float stuffAdded = 234.234f; // ...
+
+    for(int i = 0; i < MAX_OBJECTS; i++){
+
+    }
+
+	//*
 	for(int i=0; i<MAX_OBJECTS; i++){
 		positions[i] = glm::vec3(wallX, wallY, wallZ);
 		orientations[i] = glm::normalize(glm::quat(glm::vec3(0, 0, 0)));
@@ -82,6 +91,27 @@ int main(int argc, char** argv)
             wallX +=25;
 		}
 	}
+    /*
+    srand(time(NULL));
+    for(int i = 0; i < MAX_OBJECTS; i++){
+        float x = rand() % 30;
+        float y = rand() % 40 + 20;
+        float z = rand() % 30;
+        positions[i] = glm::vec3(float(x), float(y), float(z));
+        orientations[i] = glm::normalize(glm::quat(glm::vec3(rand()%360, rand()%360, rand()%360)));
+        float rx = 0.1f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(0.6f-0.1f)));
+        float ry = 0.5f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(2.2f-0.5f)));
+        float rz = 3.0f + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(6.0f-3.0f)));
+        if(i % 5 == 0){
+            rx = ry;
+            ry = ry;
+            rz = ry;
+        }
+
+        rectDimensions[i] = glm::vec3(rx, ry, rz);
+    }
+*/
+
 
 	for(int i=0; i<MAX_OBJECTS; i++){
 		btDefaultMotionState* motionstate = new btDefaultMotionState(btTransform(
@@ -89,7 +119,8 @@ int main(int argc, char** argv)
 			btVector3(positions[i].x, positions[i].y, positions[i].z)
 		));
 		btScalar mass = 1.0f;
-		btVector3 inertia = btVector3(0.0f, 0.0f, 0.0f);
+		btVector3 inertia = btVector3(0.0f, 0.0f, 0.0f); //btVector3(rectDimensions[i].x, rectDimensions[i].y, rectDimensions[i].z)
+		btCollisionShape* boxCollisionShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 		boxCollisionShape->calculateLocalInertia(mass, inertia);
 
 		btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(
@@ -135,8 +166,8 @@ int main(int argc, char** argv)
     Texture bamboo("./res/bamboo.jpg");
     Texture gunTex("./res/models/normal_up.jpg");
     //Load models from file...
-    Mesh mesh1("res/monkey3.obj");
-    Model nano("./res/models/nanosuit.obj");
+    //Mesh mesh1("res/monkey3.obj");
+    //Model nano("./res/models/nanosuit.obj");
 
     //Mesh cube(cubeVertices, sizeof(cubeVertices)/sizeof(cubeVertices[0]), cubeIndices, sizeof(cubeIndices)/sizeof(cubeIndices[0]));
     Transform transform;
@@ -149,8 +180,16 @@ int main(int argc, char** argv)
     IndexedModel cc = setupCube(1.0f);
     Mesh cube(cc);
 
-    IndexedModel pl = setupHighDensityPlane(10.0f); //setupLowDensityPlane(30.0f);
+    IndexedModel pl = setupLowDensityPlane(30.0f);  //;setupHighDensityPlane(10.0f)
     Mesh plane(pl);
+
+    //IndexedModel rct = setupRectangularCube(0.5f, 1.0f, 5.0f);
+    //Mesh rect(rct);
+
+    //for(int i = 0; i < MAX_OBJECTS; i++){
+        //IndexedModel tempRect = setupRectangularCube(rectDimensions[i].x, rectDimensions[i].y, rectDimensions[i].z);
+        //planks.push_back(new Mesh(tempRect));
+    //}
 
     //IndexedModel nano =
     //Mesh dummieVar(pl);
@@ -174,14 +213,14 @@ int main(int argc, char** argv)
     int sphereLimiter = 0;
     int sphereAdded = 0;
     float modelSpread = 0.0f;
-    printf("Model contains %d textures\n", nano.textures.size());
+    //printf("Model contains %d textures\n", nano.textures.size());
     printf("Names of textures...\n\n");
 
     // Print out the all the model's texture strings...
-    for(unsigned int i = 0; i < nano.textures.size(); i++){
-        string name = nano.textures[i].type;
-        printf("%d Type: %s\n", i, name.c_str());
-    }
+    //for(unsigned int i = 0; i < nano.textures.size(); i++){
+        //string name = nano.textures[i].type;
+        //printf("%d Type: %s\n", i, name.c_str());
+    //}
 
 	while(!glDisplay.isClosed){
         Clear(0.0f, 0.15f, 0.3f, 1.0f);
@@ -203,6 +242,7 @@ int main(int argc, char** argv)
         //*cam =
         UpdateCam(&cam, WIDTH, HEIGHT, totalDeltaTime);
         glm::vec3 translate(0.0f,0.0f,0.0f);
+        //texture.Bind(0);
         texture.Bind(0);
         texture2.Bind(1);
         //glPolygonMode(GL_FRONT, GL_LINE);
@@ -235,7 +275,7 @@ int main(int argc, char** argv)
             //if(distCull < 60.0f){
 
                 if(i < MAX_OBJECTS)
-                    cube.Draw();
+                    cube.Draw(); //planks[i]->Draw();
                 else{
                     texture3.Bind(0);
                     sphere.Draw();
@@ -260,19 +300,32 @@ int main(int argc, char** argv)
 
         }
 
-        glm::vec3 planePosition(0.0f, -14.0f, 0.0f);
+        glm::vec3 planePosition(0.0f, 15.9f, 0.0f);
         planeTransform.SetPos(planePosition);
         //glm::vec3 sc(5.0f);
         //planeTransform.SetScale(sc);
+        glm::mat4 rectrot = glm::mat4(1.0f);
+        planeTransform.SetRot(rectrot);
+
         shader.Update(planeTransform, *cam);
         bamboo.Bind(0);
+        //texture.Bind(0);
         plane.Draw();
+
+        planePosition.y += 2.0f;
+        planeTransform.SetPos(planePosition);
+
+        rectrot *= glm::rotate(rectrot, SDL_GetTicks()/1000.0f, glm::vec3(0.75f, 1.5f, 0.25f));
+        planeTransform.SetRot(rectrot);
+
+        shader.Update(planeTransform, *cam);
+        //texture.Bind(0);
+        //rect.Draw();
 
         //planePosition.y -= 30.;
         //planePosition.x += 20.;
         //planeTransform.SetPos(planePosition);
         //shader.Update(planeTransform, *cam);
-
         counter+=0.01f;
         shader.Update(modelTransform, *cam);
         glm::vec3 modelMeshPositions(0.0, 8.0, 0.0);
@@ -286,9 +339,9 @@ int main(int argc, char** argv)
         modelTransform.SetPos(modelMeshPositions);
         shader.Update(modelTransform, *cam);
 
-
-        nano.Draw();
-
+        //glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+        //nano.Draw();
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #ifdef DEBUG_RENDERER
         mydebugdrawer.SetMatrices(GetView(*cam), cam->projection);
         dynamicsWorld->debugDrawWorld();

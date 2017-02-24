@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1473325501 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1487916872 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -20,36 +20,36 @@
 	<glm/glm.hpp>
 	<btBulletDynamicsCommon.h>
 
-1472974144 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1482175721 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
 
-1470981940 c:\users\michael\desktop\projects\sandbox\display.h
+1482107620 c:\users\michael\desktop\projects\sandbox\display.h
 	<GL/glew.h>
 	<SDL.h>
 	<string>
 
-1474603646 c:\users\michael\desktop\projects\sandbox\shader.h
+1474600046 c:\users\michael\desktop\projects\sandbox\shader.h
 	<string>
 	<GL/glew.h>
 	"Camera.h"
 	"Transform.h"
 
-1473325303 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
+1473321703 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
 	"Shader.h"
 	<SDL.h>
 	<fstream>
 	<iostream>
 
-1474603646 c:\users\michael\desktop\projects\sandbox\mesh.h
+1474600046 c:\users\michael\desktop\projects\sandbox\mesh.h
 	<GL/glew.h>
 	<string>
 	<vector>
 	<glm/glm.hpp>
 	"obj_loader.h"
 
-1473154276 source:c:\users\michael\desktop\projects\sandbox\mesh.cpp
+1473150676 source:c:\users\michael\desktop\projects\sandbox\mesh.cpp
 	"Mesh.h"
 	"obj_loader.h"
 	<vector>
@@ -58,15 +58,15 @@
 	<assimp/scene.h>
 	<assimp/postprocess.h>
 
-1472624189 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+1472620589 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
 	"Camera.h"
 	<SDL.h>
 
-1471312211 c:\users\michael\desktop\projects\sandbox\camera.h
+1471308611 c:\users\michael\desktop\projects\sandbox\camera.h
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 
-1474603646 c:\users\michael\desktop\projects\sandbox\transform.h
+1474600046 c:\users\michael\desktop\projects\sandbox\transform.h
 	<glm/glm.hpp>
 	<glm/gtx/transform.hpp>
 	<glm/gtc/matrix_transform.hpp>
@@ -74,7 +74,7 @@
 	<glm/gtx/quaternion.hpp>
 	"Camera.h"
 
-1470723762 source:c:\users\michael\desktop\projects\sandbox\stb_image.c
+1470720162 source:c:\users\michael\desktop\projects\sandbox\stb_image.c
 	<stdio.h>
 	<math.h>
 	<string.h>
@@ -86,48 +86,48 @@
 	<stddef.h>
 	<stdint.h>
 
-1472638397 source:c:\users\michael\desktop\projects\sandbox\texture.cpp
+1472634797 source:c:\users\michael\desktop\projects\sandbox\texture.cpp
 	"Texture.h"
 	"stb_image.h"
 	<cassert>
 	<iostream>
 
-1474603646 c:\users\michael\desktop\projects\sandbox\texture.h
+1474600046 c:\users\michael\desktop\projects\sandbox\texture.h
 	<string>
 	<GL/glew.h>
 
-1470723762 c:\users\michael\desktop\projects\sandbox\stb_image.h
+1470720162 c:\users\michael\desktop\projects\sandbox\stb_image.h
 	<stdio.h>
 
-1470786893 c:\users\michael\desktop\projects\sandbox\obj_loader.h
+1470783293 c:\users\michael\desktop\projects\sandbox\obj_loader.h
 	<glm/glm.hpp>
 	<vector>
 	<string>
 
-1470786893 source:c:\users\michael\desktop\projects\sandbox\obj_loader.cpp
+1470783293 source:c:\users\michael\desktop\projects\sandbox\obj_loader.cpp
 	"obj_loader.h"
 	<fstream>
 	<iostream>
 	<algorithm>
 	<map>
 
-1473154614 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
+1478400067 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
 	<stdlib.h>
 	"Geometric_Primitives.h"
 
-1473148017 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
+1478400038 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
 	"obj_loader.h"
 	"Mesh.h"
 
-1474603646 c:\users\michael\desktop\projects\sandbox\clock.h
+1474600046 c:\users\michael\desktop\projects\sandbox\clock.h
 	<SDL.h>
 
-1473323599 source:c:\users\michael\desktop\projects\sandbox\particles.cpp
+1483124826 source:c:\users\michael\desktop\projects\sandbox\particles.cpp
 	"Particles.h"
 	"Shader.h"
 	"Transform.h"
 
-1471404884 c:\users\michael\desktop\projects\sandbox\particles.h
+1471401284 c:\users\michael\desktop\projects\sandbox\particles.h
 	<GL/glew.h>
 	<glm/common.hpp>
 	<glm/gtc/matrix_transform.hpp>
@@ -138,25 +138,25 @@
 	<algorithm>
 	"Camera.h"
 
-1474603647 c:\users\michael\desktop\projects\sandbox\bulletdebugdeprecatedgl.h
+1474600047 c:\users\michael\desktop\projects\sandbox\bulletdebugdeprecatedgl.h
 	<btBulletDynamicsCommon.h>
 
-1474603646 c:\users\michael\desktop\projects\sandbox\raycast.h
+1474600046 c:\users\michael\desktop\projects\sandbox\raycast.h
 	<glm/glm.hpp>
 
-1471941641 source:c:\users\michael\desktop\projects\sandbox\raycast.cpp
+1471938041 source:c:\users\michael\desktop\projects\sandbox\raycast.cpp
 	"Raycast.h"
 
-1471950837 source:c:\users\michael\desktop\projects\sandbox\bulletphysics.cpp
+1471947237 source:c:\users\michael\desktop\projects\sandbox\bulletphysics.cpp
 	"BulletPhysics.h"
 	"Raycast.h"
 
-1474603646 c:\users\michael\desktop\projects\sandbox\bulletphysics.h
+1474600046 c:\users\michael\desktop\projects\sandbox\bulletphysics.h
 	<vector>
 	<btBulletDynamicsCommon.h>
 	"Camera.h"
 
-1474603733 c:\users\michael\desktop\projects\sandbox\model.h
+1474600133 c:\users\michael\desktop\projects\sandbox\model.h
 	<string>
 	<fstream>
 	<sstream>
