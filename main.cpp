@@ -6,12 +6,12 @@
 #include <SDL.h>
 
 #include "Display.h"
-//#include "Mesh.h"
+#include "Mesh.h"
 #include "Shader.h"
 #include "Camera.h"
 #include "Transform.h"
 #include "Texture.h"
-#include "obj_loader.h"
+//#include "obj_loader.h"
 #include "Geometric_Primitives.h"
 #include "Clock.h"
 #include "BulletDebugDeprecatedGL.h"
@@ -175,15 +175,15 @@ int main(int argc, char** argv)
     Transform planeTransform;
     Transform modelTransform;
 
-    IndexedModel sph = setupSphere(1.0f, 15.f, 15.f);
-    Mesh sphere(sph);
+    //IndexedModel sph = setupSphere(1.0f, 15.f, 15.f);
+    Mesh* sphere = new Mesh(setupSphere(1.0f, 15.f, 15.f));
 
-    IndexedModel cc = setupCube(1.0f);
-    Mesh cube(cc);
-
-    IndexedModel pl = setupLowDensityPlane(30.0f);  //;setupHighDensityPlane(10.0f)
-    Mesh plane(pl);
-
+    //IndexedModel cc = setupCube(1.0f);
+    //Mesh cube(cc);
+    Mesh* cube = new Mesh(setupCube(1.0f));
+    //IndexedModel pl = setupLowDensityPlane(30.0f);  //;setupHighDensityPlane(10.0f)
+    //Mesh plane(pl);
+    Mesh* plane = new Mesh(setupLowDensityPlane(30.0f));
     //IndexedModel rct = setupRectangularCube(0.5f, 1.0f, 5.0f);
     //Mesh rect(rct);
 
@@ -276,10 +276,10 @@ int main(int argc, char** argv)
             //if(distCull < 60.0f){
 
                 if(i < MAX_OBJECTS)
-                    cube.Draw(); //planks[i]->Draw();
+                    cube->Draw(); //planks[i]->Draw();
                 else{
                     texture3.Bind(0);
-                    sphere.Draw();
+                    sphere->Draw();
                 }
             //}
 #endif // PHYSICS_TEST
@@ -301,7 +301,7 @@ int main(int argc, char** argv)
 
         }
 
-        glm::vec3 planePosition(0.0f, 15.9f, 0.0f);
+        glm::vec3 planePosition(0.0f, -19.9f, 0.0f);
         planeTransform.SetPos(planePosition);
         //glm::vec3 sc(5.0f);
         //planeTransform.SetScale(sc);
@@ -311,7 +311,7 @@ int main(int argc, char** argv)
         shader.Update(planeTransform, *cam);
         bamboo.Bind(0);
         //texture.Bind(0);
-        plane.Draw();
+        plane->Draw();
 
         planePosition.y += 2.0f;
         planeTransform.SetPos(planePosition);

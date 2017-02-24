@@ -1,13 +1,12 @@
 #ifndef GEOMETRIC_PRIMITIVES_H_INCLUDED
 #define GEOMETRIC_PRIMITIVES_H_INCLUDED
 
-#include "obj_loader.h"
+//#include "obj_loader.h"
 #include "Mesh.h"
 //setup err create..?
-IndexedModel setupSphere(float radius, float latitudeBands, float longitudeBands);
-IndexedModel setupCube(float cubeSize);
-IndexedModel setupRectangularCube(float width, float height, float depth);
-IndexedModel setupLowDensityPlane(float planeSize);
-IndexedModel setupHighDensityPlane(int mapSize);
+Mesh setupSphere(float radius, float latitudeBands, float longitudeBands);
+Mesh setupCube(float cubeSize);
+Mesh setupLowDensityPlane(float planeSize);
+Mesh setupHighDensityPlane(int mapSize, float density, bool bump);
 
 #endif // GEOMETRIC_PRIMITIVES_H_INCLUDED

@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1487924166 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1487925896 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
 	<SDL.h>
 	"Display.h"
+	"Mesh.h"
 	"Shader.h"
 	"Camera.h"
 	"Transform.h"
 	"Texture.h"
-	"obj_loader.h"
 	"Geometric_Primitives.h"
 	"Clock.h"
 	"BulletDebugDeprecatedGL.h"
@@ -41,16 +41,14 @@
 	<fstream>
 	<iostream>
 
-1474600046 c:\users\michael\desktop\projects\sandbox\mesh.h
+1487745556 c:\users\michael\desktop\projects\sandbox\mesh.h
 	<GL/glew.h>
 	<string>
 	<vector>
 	<glm/glm.hpp>
-	"obj_loader.h"
 
-1473150676 source:c:\users\michael\desktop\projects\sandbox\mesh.cpp
+1487890649 source:c:\users\michael\desktop\projects\sandbox\mesh.cpp
 	"Mesh.h"
-	"obj_loader.h"
 	<vector>
 	<stdio.h>
 	<assimp/Importer.hpp>
@@ -111,12 +109,11 @@
 	<algorithm>
 	<map>
 
-1478400067 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
+1487890894 source:c:\users\michael\desktop\projects\sandbox\geometric_primitives.cpp
 	<stdlib.h>
 	"Geometric_Primitives.h"
 
-1478400038 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
-	"obj_loader.h"
+1487826069 c:\users\michael\desktop\projects\sandbox\geometric_primitives.h
 	"Mesh.h"
 
 1474600046 c:\users\michael\desktop\projects\sandbox\clock.h

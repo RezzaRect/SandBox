@@ -1,4 +1,5 @@
 #include <stdlib.h>
+//#include "stb_perlin.h"
 
 #include "Geometric_Primitives.h"
 // \/ \/ was defined in main... M_PI at least...
@@ -7,7 +8,7 @@
 #define M_PI_4 0.78539816339744830962 /* pi/4 */
 
 // https://gist.github.com/davidbitton/1094320
-IndexedModel setupSphere(float radius, float latitudeBands, float longitudeBands){
+Mesh setupSphere(float radius, float latitudeBands, float longitudeBands){
     IndexedModel model;
 
     for (float latNumber = 0; latNumber <= latitudeBands; latNumber++) {
@@ -52,10 +53,10 @@ IndexedModel setupSphere(float radius, float latitudeBands, float longitudeBands
         //copy(verticesVector.begin(), verticesVector.end(), vertices);
         //copy(indicesVector.begin(), indicesVector.end(), indices);
     }
-    return model;
+    return Mesh(model);
 }
 
-IndexedModel setupCube(float cubeSize){
+Mesh setupCube(float cubeSize){
     //Mesh mesh;
     //float cbs
     IndexedModel model;
@@ -114,78 +115,19 @@ IndexedModel setupCube(float cubeSize){
     //return Mesh mesh(cubeVertices, sizeof(cubeVertices)/sizeof(cubeVertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
 
     //return mesh;
-    return model;
+    return Mesh(model);
 }
 
-IndexedModel setupRectangularCube(float width, float height, float depth){
-    IndexedModel model;
-
-    Vertex cubeVertices[] = {
-        // FRONT SIDE
-        Vertex(glm::vec3(-width, -height, depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
-        Vertex(glm::vec3(width, -height, depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
-        Vertex(glm::vec3(width, height, depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
-        Vertex(glm::vec3(-width, height, depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
-        // RIGHT SIDE
-        Vertex(glm::vec3(width, height, depth), glm::vec2(0.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(width, height, -depth), glm::vec2(1.0, 0.0), glm::vec3(1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(width, -height, -depth), glm::vec2(1.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(width, -height, depth), glm::vec2(0.0, 1.0), glm::vec3(1.0, 0.0, 0.0)),
-        // BACK SIDE
-        Vertex(glm::vec3(-width, -height, -depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
-        Vertex(glm::vec3(width, -height, -depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, -1.0)),
-        Vertex(glm::vec3(width, height, -depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
-        Vertex(glm::vec3(-width, height, -depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, -1.0)),
-        // LEFT SIDE
-        Vertex(glm::vec3(-width, -height, -depth), glm::vec2(0.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(-width, -height, depth), glm::vec2(1.0, 0.0), glm::vec3(-1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(-width, height, depth), glm::vec2(1.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
-        Vertex(glm::vec3(-width, height, -depth), glm::vec2(0.0, 1.0), glm::vec3(-1.0, 0.0, 0.0)),
-        // UPPER SIDE
-        Vertex(glm::vec3(width, height, depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(-width, height, depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(-width, height, -depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(width, height, -depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
-        // BOTTOM SIDE
-        Vertex(glm::vec3(-width, -height, -depth), glm::vec2(0.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
-        Vertex(glm::vec3(width, -height, -depth), glm::vec2(1.0, 0.0), glm::vec3(0.0, -1.0, 0.0)),
-        Vertex(glm::vec3(width, -height, depth), glm::vec2(1.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
-        Vertex(glm::vec3(-width, -height, depth), glm::vec2(0.0, 1.0), glm::vec3(0.0, -1.0, 0.0)),
-    };
-    unsigned int indices[] = { 0,  1,  2,  0,  2,  3,   //front
-                               4,  5,  6,  4,  6,  7,   //right
-                               8,  9,  10, 8,  10, 11,  //back
-                               12, 13, 14, 12, 14, 15,  //left
-                               16, 17, 18, 16, 18, 19,  //upper
-                               20, 21, 22, 20, 22, 23}; //bottom
-
-    int vertSize = sizeof(cubeVertices) / sizeof(cubeVertices[0]);
-    int indicesSize = sizeof(indices) / sizeof(indices[0]);
-
-    for(int i = 0; i < vertSize; i++){
-        model.normals.push_back(*cubeVertices[i].GetNormal());
-        model.texCoords.push_back(*cubeVertices[i].GetTexCoord());
-        model.positions.push_back(*cubeVertices[i].GetPos());
-    }
-
-    for(int i = 0; i < indicesSize; i++)
-        model.indices.push_back(indices[i]);
-
-    //return Mesh mesh(cubeVertices, sizeof(cubeVertices)/sizeof(cubeVertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
-
-    //return mesh;
-    return model;
-}
-
-IndexedModel setupLowDensityPlane(float planeSize){
+Mesh setupLowDensityPlane(float planeSize){
     IndexedModel model;
 
     Vertex planeVertices[] = {
         // BOTTOM SIDE
-        Vertex(glm::vec3(-planeSize, -planeSize, -planeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(planeSize, -planeSize, -planeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(planeSize, -planeSize, planeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
-        Vertex(glm::vec3(-planeSize, -planeSize, planeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        // reset y value to 0
+        Vertex(glm::vec3(-planeSize, 0.0f, -planeSize), glm::vec2(0.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(planeSize, 0.0f, -planeSize), glm::vec2(1.0, 0.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(planeSize, 0.0f, planeSize), glm::vec2(1.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
+        Vertex(glm::vec3(-planeSize, 0.0f, planeSize), glm::vec2(0.0, 1.0), glm::vec3(0.0, 1.0, 0.0)),
     };
     unsigned int indices[] = { 0,  1,  2,  0,  2,  3 };
 
@@ -201,31 +143,42 @@ IndexedModel setupLowDensityPlane(float planeSize){
     for(int i = 0; i < indicesSize; i++)
         model.indices.push_back(indices[i]);
 
-    return model;
+    return Mesh(model);
 }
-
-IndexedModel setupHighDensityPlane(int mapSize){
+// add density(the x-z value in positions) - was hard coded to .5
+// add noise or fractal bumping for the y value then recalculate the normals
+Mesh setupHighDensityPlane(int mapSize, float density, bool bump){
     IndexedModel model;
+    float yBumpAmount = 0.0f;
+    int iter = 0;
 
     for(int i = -mapSize; i <= mapSize; i++){
 
         for(int j = -mapSize; j <= mapSize; j++){
             int index = model.positions.size();//model.normals.size()+model.positions.size();//+model.texCoords.size(); //.size(); //(model.positions.size() + model.normals.size() + model.texCoords.size());
 
-            model.positions.push_back(glm::vec3(-0.5f + i, 0.0f, -0.5f + j));
-            model.positions.push_back(glm::vec3(+0.5f + i, 0.0f, -0.5f + j));
-            model.positions.push_back(glm::vec3(+0.5f + i, 0.0f, +0.5f + j));
-            model.positions.push_back(glm::vec3(-0.5f + i, 0.0f, +0.5f + j));
+
+            model.positions.push_back(glm::vec3(-density + i, yBumpAmount, -density + j));
+            model.positions.push_back(glm::vec3(+density + i, yBumpAmount, -density + j));
+            model.positions.push_back(glm::vec3(+density + i, yBumpAmount, +density + j));
+            model.positions.push_back(glm::vec3(-density + i, yBumpAmount, +density + j));
+
+            //if(bump == true){
+                //yBumpAmount = stb_perlin_noise3(model.positions[iter].x, model.positions[iter].y, model.positions[iter].z);
+            //}
+            //iter++;
 
             model.texCoords.push_back(glm::vec2(0.0f, 0.0f));
             model.texCoords.push_back(glm::vec2(1.0f, 0.0f));
             model.texCoords.push_back(glm::vec2(1.0f, 1.0f));
             model.texCoords.push_back(glm::vec2(0.0f, 1.0f));
 
+            //if(!bump){
             model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
             model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
             model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
             model.normals.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+            //}
 
             model.indices.push_back(index+0);
             model.indices.push_back(index+3);
@@ -235,5 +188,9 @@ IndexedModel setupHighDensityPlane(int mapSize){
             model.indices.push_back(index+0);
         }
     }
-    return model;
+
+    //if(bump == true)
+       //model.CalcNormals();
+
+    return Mesh(model);
 }
