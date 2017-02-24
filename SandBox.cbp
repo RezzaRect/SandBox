@@ -46,8 +46,8 @@
 		<Unit filename="Geometric_Primitives.h" />
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Model.h" />
-		<Unit filename="Particles.cpp" />
-		<Unit filename="Particles.h" />
+		<Unit filename="Particle_Emitter.cpp" />
+		<Unit filename="Particle_Emitter.h" />
 		<Unit filename="Shader.cpp" />
 		<Unit filename="Shader.h" />
 		<Unit filename="Texture.cpp" />

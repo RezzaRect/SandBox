@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1487929181 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1487976000 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -14,7 +14,7 @@
 	"Clock.h"
 	"BulletDebugDeprecatedGL.h"
 	"BulletPhysics.h"
-	"Model.h"
+	"Particle_Emitter.h"
 	<glm/glm.hpp>
 	<btBulletDynamicsCommon.h>
 
@@ -167,4 +167,23 @@
 	<assimp/scene.h>
 	<assimp/postprocess.h>
 	"Mesh.h"
+
+1487830546 source:c:\users\michael\desktop\projects\sandbox\particle_emitter.cpp
+	"Particle_Emitter.h"
+	"stb_perlin.h"
+
+1484105441 c:\users\michael\desktop\projects\sandbox\particle_emitter.h
+	<stdio.h>
+	<stdlib.h>
+	<vector>
+	<algorithm>
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtx/norm.hpp>
+	<SDL.h>
+	"Camera.h"
+
+1473320363 c:\users\michael\desktop\projects\sandbox\stb_perlin.h
+	<math.h>
 
