@@ -44,9 +44,9 @@ int main(int argc, char** argv)
 
     glm::vec3 sp = glm::vec3(0.0, 10.0, 0.0);
     glm::ivec3 white = glm::vec3(255.0);
-    ParticleEmitter* particles = new ParticleEmitter(1000, sp, white, 10);
+    ParticleEmitter* particles = new ParticleEmitter(2500, sp, white, 10);
     sp.x += 10.0f;
-    ParticleEmitter* particles1= new ParticleEmitter(1000, sp, white, 10);
+    ParticleEmitter* particles1= new ParticleEmitter(2500, sp, white, 10);
 
 
 	// Initialize The physics world.
