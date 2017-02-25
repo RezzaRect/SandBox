@@ -68,11 +68,9 @@ int main(int argc, char** argv)
     Transform planeTransform;
     Transform modelTransform;
 
-    //IndexedModel sph = setupSphere(1.0f, 15.f, 15.f);
     Mesh* sphere = new Mesh(setupSphere(1.0f, 15.f, 15.f));
     Mesh* cube = new Mesh(setupCube(1.0f));
     Mesh* plane = new Mesh(setupLowDensityPlane(30.0f));
-
 
     glm::vec3 orientation(1.0f);
     glm::vec3 position(0.0f, -20.0f, 0.0f);
@@ -84,8 +82,6 @@ int main(int argc, char** argv)
     float previousTicks = SDL_GetTicks();
     int nbFrames = 0;
     Clock clock;
-    float counter = 0.0f;
-
 
 #ifdef DEBUG_RENDERER
     BulletDebugDrawer_DeprecatedOpenGL mydebugdrawer;
@@ -94,15 +90,7 @@ int main(int argc, char** argv)
 
     int sphereLimiter = 0;
     int sphereAdded = 0;
-    float modelSpread = 0.0f;
-    //printf("Model contains %d textures\n", nano.textures.size());
-    printf("Names of textures...\n\n");
 
-    // Print out the all the model's texture strings...
-    //for(unsigned int i = 0; i < nano.textures.size(); i++){
-        //string name = nano.textures[i].type;
-        //printf("%d Type: %s\n", i, name.c_str());
-    //}
 
     SDL_ShowCursor(SDL_DISABLE);
 
@@ -111,7 +99,6 @@ int main(int argc, char** argv)
         Clear(0.0f, 0.0f, 0.0f, 1.0f);
         glDisable(GL_BLEND);
 
-        modelSpread += 0.01f;
         sphereLimiter++;
         float newTicks = SDL_GetTicks();
 		float delta = newTicks - previousTicks;
@@ -134,10 +121,8 @@ int main(int argc, char** argv)
 #endif // PHYSICS_TEST
 
         shader.Bind();
-        //*cam =
         UpdateCam(&cam, WIDTH, HEIGHT, totalDeltaTime);
         glm::vec3 translate(0.0f,0.0f,0.0f);
-        //texture.Bind(0);
         texture.Bind(0);
         texture2.Bind(1);
         //glPolygonMode(GL_FRONT, GL_LINE);
@@ -160,42 +145,13 @@ int main(int argc, char** argv)
 
         glm::vec3 planePosition(0.0f, -19.9f, 0.0f);
         planeTransform.SetPos(planePosition);
-        //glm::vec3 sc(5.0f);
-        //planeTransform.SetScale(sc);
-        glm::mat4 rectrot = glm::mat4(1.0f);
-        planeTransform.SetRot(rectrot);
 
         shader.Update(planeTransform, *cam);
         bamboo.Bind(0);
-        //texture.Bind(0);
         plane->Draw();
 
-        planePosition.y += 2.0f;
-        planeTransform.SetPos(planePosition);
-
-        rectrot *= glm::rotate(rectrot, SDL_GetTicks()/1000.0f, glm::vec3(0.75f, 1.5f, 0.25f));
-        planeTransform.SetRot(rectrot);
-
         shader.Update(planeTransform, *cam);
-        //texture.Bind(0);
-        //rect.Draw();
 
-        //planePosition.y -= 30.;
-        //planePosition.x += 20.;
-        //planeTransform.SetPos(planePosition);
-        //shader.Update(planeTransform, *cam);
-        counter+=0.01f;
-        shader.Update(modelTransform, *cam);
-        glm::vec3 modelMeshPositions(0.0, 8.0, 0.0);
-        glm::mat4 rot3d(1.0f);
-        rot3d*=glm::rotate(counter, glm::vec3(0.0, 1.0, 0.0) );
-        modelTransform.SetRot(rot3d);
-
-        shader.Update(modelTransform, *cam);
-
-        modelMeshPositions=glm::vec3(8.0f, -8.0f, 0.0);
-        modelTransform.SetPos(modelMeshPositions);
-        shader.Update(modelTransform, *cam);
 
         //glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
         //nano.Draw();
@@ -214,9 +170,6 @@ int main(int argc, char** argv)
             rigidbodies[i]->applyCentralImpulse(btVector3(-push.x, -push.y, -push.z));
         } else if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)){
             if(sphereLimiter >= 20){
-                //btRigidBody* sphere=addSphere(1.0, cam->pos.x, cam->pos.y, cam->pos.z, 1.0, &dynamicsWorld, rigidbodies);
-                //sphere->setLinearVelocity(btVector3(push.x,push.y,push.z)*75.0f);
-                //addSphere(1.0f, cam->pos, push, 1.0f, &btDynamicsWorld, rigidbodies, sphereAdded);
                 addSphere(1.0, cam->pos, push, 1.0, &dynamicsWorld, rigidbodies, sphereAdded);
                 sphereLimiter = 0;
                 sphereAdded++;

@@ -105,7 +105,7 @@ void ParticleEmitter::UpdateParticles(Camera** cam, float delta){
     for(int i = 0; i < m_particlesPerFrame; i++){
         int particleIndex = FindUnusedParticle();
         m_ParticlesContainer[particleIndex].life = 5.0f; // This particle will live 5 seconds.m_spawnPointglm::vec3(0.0f ,-10.0f,0.0f);
-        m_ParticlesContainer[particleIndex].pos =  glm::vec3((rand()%2000 - 1000.0f)/25.0f, 20.0f,
+        m_ParticlesContainer[particleIndex].pos =  glm::vec3((rand()%2000 - 1000.0f)/25.0f, 30.0f,
                                                              (rand()%2000 - 1000.0f)/25.0f);  //
         //m_ParticlesContainer[particleIndex].pos.x-=9.0f;
         float spread = 1.5f;
