@@ -44,21 +44,25 @@ int main(int argc, char** argv)
 
     glm::vec3 sp = glm::vec3(0.0, 10.0, 0.0);
     glm::ivec3 white = glm::vec3(255.0);
-    ParticleEmitter* particles = new ParticleEmitter(2500, sp, white, 10);
+    ParticleEmitter* particles = new ParticleEmitter(3000, sp, white, 10);
     sp.x += 10.0f;
-    ParticleEmitter* particles1= new ParticleEmitter(2500, sp, white, 10);
+    ParticleEmitter* particles1= new ParticleEmitter(3000, sp, white, 10);
 
 
 	// Initialize The physics world.
 	btDiscreteDynamicsWorld* dynamicsWorld = intitBullet(-9.81f);
     // vector array to store all bullet physics objects
     std::vector<btRigidBody*> rigidbodies;
-
+    //std::vector<Camera*> cams;
 	//Loading textures and shaders from file...
 	Shader shader("./res/shaders/basicShader");
 	Shader particleShader("./res/shaders/particleShader");
     Texture texture("./res/textures/container2.png"); //lvv.jpg
+    //Texture texture("./res/textures/brickwall.jpg"); //lvv.jpg
+
     Texture texture2("./res/textures/container2_specular.png"); // bricks.jpg
+    //Texture texture2("./res/textures/brickwall_normal.jpg"); // bricks.jpg
+
     Texture texture3("./res/textures/soccer3.jpg");
     Texture bamboo("./res/textures/bamboo.jpg");
     //Texture gunTex("./res/models/normal_up.jpg");
@@ -89,7 +93,7 @@ int main(int argc, char** argv)
 #endif // DEBUG_RENDERER
 
     int sphereLimiter = 0;
-    int sphereAdded = 0;
+    int sphereAdded = MAX_OBJECTS;
 
 
     SDL_ShowCursor(SDL_DISABLE);
@@ -109,8 +113,11 @@ int main(int argc, char** argv)
         SDL_Event event;
         SDL_PollEvent(&event);
 
-        if (keyboard_state_array[SDL_SCANCODE_R])
+        if (keyboard_state_array[SDL_SCANCODE_R]){
             resetBoxPositions(rigidbodies, &dynamicsWorld, MAX_OBJECTS, sphereAdded);
+            sphereAdded = MAX_OBJECTS;
+        }
+
 
 
         particles->UpdateParticles(&cam, .016f);

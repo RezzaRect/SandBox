@@ -24,7 +24,7 @@ class Shader
 
     private:
         static const unsigned int NUM_SHADERS = 2;
-        static const unsigned int NUM_UNIFORMS = 10;
+        static const unsigned int NUM_UNIFORMS = 12;
         //Shader(const Shader& other){}
         //void Shader& operator=(const Shader& other){}
 

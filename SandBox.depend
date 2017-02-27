@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1487988698 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1488179295 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -7,7 +7,7 @@
 	"project_includes.h"
 	<glm/glm.hpp>
 
-1487981084 source:c:\users\michael\desktop\projects\sandbox\display.cpp
+1488173835 source:c:\users\michael\desktop\projects\sandbox\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
@@ -17,13 +17,13 @@
 	<SDL.h>
 	<string>
 
-1474600046 c:\users\michael\desktop\projects\sandbox\shader.h
+1488177974 c:\users\michael\desktop\projects\sandbox\shader.h
 	<string>
 	<GL/glew.h>
 	"Camera.h"
 	"Transform.h"
 
-1473321703 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
+1488178507 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
 	"Shader.h"
 	<SDL.h>
 	<fstream>
@@ -43,7 +43,7 @@
 	<assimp/scene.h>
 	<assimp/postprocess.h>
 
-1486451483 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
+1488175421 source:c:\users\michael\desktop\projects\sandbox\camera.cpp
 	"Camera.h"
 	<SDL.h>
 	<glm/gtx/rotate_vector.hpp>

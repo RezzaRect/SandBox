@@ -21,7 +21,8 @@ Shader::Shader(const std::string& fileName)
     glBindAttribLocation(m_program, 0, "position");
     glBindAttribLocation(m_program, 1, "texCoord");
     glBindAttribLocation(m_program, 2, "normal");
-
+    glBindAttribLocation(m_program, 3, "tangent");
+    glBindAttribLocation(m_program, 4, "bitangent");
 
     glLinkProgram(m_program);
     CheckShaderError(m_program, GL_LINK_STATUS, true, "Error: Program failed to link");
@@ -37,9 +38,10 @@ Shader::Shader(const std::string& fileName)
 	m_uniforms[3] = glGetUniformLocation(m_program, "viewPos");
 	m_uniforms[4] = glGetUniformLocation(m_program, "CameraRight_worldspace");
 	m_uniforms[5] = glGetUniformLocation(m_program, "CameraUp_worldspace");
-	m_uniforms[6] = glGetUniformLocation(m_program, "diffuseTexture");
+	m_uniforms[6] = glGetUniformLocation(m_program, "diffuse");
 	m_uniforms[7] = glGetUniformLocation(m_program, "specularTexture");
 	m_uniforms[8] = glGetUniformLocation(m_program, "time");
+	m_uniforms[9] = glGetUniformLocation(m_program, "normalMap");
 
 	// Increase size of "m_uniforms[SIZE]" GLuint array make
 	// sure the data passed into update matches these declarations
@@ -77,8 +79,9 @@ void Shader::Update(const Transform& transform, Camera& camera){
     glUniform3f(m_uniforms[3], camera.pos.x, camera.pos.y, camera.pos.z);
     glUniform3f(m_uniforms[4], viewProj[0][0], viewProj[1][0], viewProj[2][0]);
     glUniform3f(m_uniforms[5], viewProj[0][1], viewProj[1][1], viewProj[2][1]);
-    //glUniform1i(m_uniforms[6], 0);
-    //glUniform1i(m_uniforms[7], 1);
+    glUniform1i(m_uniforms[6], 0);
+    glUniform1i(m_uniforms[7], 1);
+    //glUniform1i(m_uniforms[9], 1);
     glUniform1f(m_uniforms[8], SDL_GetTicks()/1000.0);
 
 }
