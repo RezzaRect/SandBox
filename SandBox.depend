@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1488179295 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1488266233 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -17,11 +17,11 @@
 	<SDL.h>
 	<string>
 
-1488177974 c:\users\michael\desktop\projects\sandbox\shader.h
+1488266549 c:\users\michael\desktop\projects\sandbox\shader.h
 	<string>
 	<GL/glew.h>
-	"Camera.h"
-	"Transform.h"
+	"core/Camera.h"
+	"core/Transform.h"
 
 1488178507 source:c:\users\michael\desktop\projects\sandbox\shader.cpp
 	"Shader.h"
@@ -135,11 +135,10 @@
 1487911789 source:c:\users\michael\desktop\projects\sandbox\bulletphysics.cpp
 	"BulletPhysics.h"
 
-1487911730 c:\users\michael\desktop\projects\sandbox\bulletphysics.h
+1488264137 c:\users\michael\desktop\projects\sandbox\bulletphysics.h
 	<vector>
 	<btBulletDynamicsCommon.h>
-	"Camera.h"
-	"Transform.h"
+	"project_includes.h"
 
 1474600133 c:\users\michael\desktop\projects\sandbox\model.h
 	<string>
@@ -161,7 +160,7 @@
 	"Particle_Emitter.h"
 	"stb_perlin.h"
 
-1484105441 c:\users\michael\desktop\projects\sandbox\particle_emitter.h
+1488266569 c:\users\michael\desktop\projects\sandbox\particle_emitter.h
 	<stdio.h>
 	<stdlib.h>
 	<vector>
@@ -171,21 +170,121 @@
 	<glm/gtc/matrix_transform.hpp>
 	<glm/gtx/norm.hpp>
 	<SDL.h>
-	"Camera.h"
+	"core/Camera.h"
 
 1473320363 c:\users\michael\desktop\projects\sandbox\stb_perlin.h
 	<math.h>
 
-1487977449 c:\users\michael\desktop\projects\sandbox\project_includes.h
-	"Display.h"
-	"Mesh.h"
-	"Shader.h"
-	"Camera.h"
-	"Transform.h"
-	"Texture.h"
-	"Geometric_Primitives.h"
-	"Clock.h"
-	"BulletDebugDeprecatedGL.h"
+1488266898 c:\users\michael\desktop\projects\sandbox\project_includes.h
+	"core/Display.h"
+	"core/Camera.h"
+	"rendering/Shader.h"
+	"core/Camera.h"
+	"core/Transform.h"
+	"rendering/Texture.h"
+	"rendering/Geometric_Primitives.h"
+	"core/Clock.h"
+	"physics/BulletDebugDeprecatedGL.h"
+	"physics/BulletPhysics.h"
+	"rendering/Particle_Emitter.h"
+
+1474600047 c:\users\michael\desktop\projects\sandbox\physics\bulletdebugdeprecatedgl.h
+	<btBulletDynamicsCommon.h>
+
+1488265757 c:\users\michael\desktop\projects\sandbox\physics\bulletphysics.h
+	<vector>
+	<btBulletDynamicsCommon.h>
+	"../project_includes.h"
+
+1487911789 source:c:\users\michael\desktop\projects\sandbox\physics\bulletphysics.cpp
 	"BulletPhysics.h"
+
+1482125324 c:\users\michael\desktop\projects\sandbox\core\display.h
+	<GL/glew.h>
+	<SDL.h>
+	<string>
+
+1486329625 c:\users\michael\desktop\projects\sandbox\core\camera.h
+	<glm/glm.hpp>
+	<glm/gtx/transform.hpp>
+
+1474600046 c:\users\michael\desktop\projects\sandbox\core\transform.h
+	<glm/glm.hpp>
+	<glm/gtx/transform.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/quaternion.hpp>
+	<glm/gtx/quaternion.hpp>
+	"Camera.h"
+
+1488175421 source:c:\users\michael\desktop\projects\sandbox\core\camera.cpp
+	"Camera.h"
+	<SDL.h>
+	<glm/gtx/rotate_vector.hpp>
+
+1488173835 source:c:\users\michael\desktop\projects\sandbox\core\display.cpp
+	"Display.h"
+	<iostream>
+	<stdio.h>
+
+1474600046 c:\users\michael\desktop\projects\sandbox\core\clock.h
+	<SDL.h>
+
+1488266984 c:\users\michael\desktop\projects\sandbox\rendering\shader.h
+	<string>
+	<GL/glew.h>
+	"../core/Camera.h"
+	"../core/Transform.h"
+
+1474600046 c:\users\michael\desktop\projects\sandbox\rendering\texture.h
+	<string>
+	<GL/glew.h>
+
+1487826069 c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.h
+	"Mesh.h"
+
+1487745556 c:\users\michael\desktop\projects\sandbox\rendering\mesh.h
+	<GL/glew.h>
+	<string>
+	<vector>
+	<glm/glm.hpp>
+
+1488267269 c:\users\michael\desktop\projects\sandbox\rendering\particle_emitter.h
+	<stdio.h>
+	<stdlib.h>
+	<vector>
+	<algorithm>
+	<GL/glew.h>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtx/norm.hpp>
+	<SDL.h>
+	"../core/Camera.h"
+
+1487890894 source:c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.cpp
+	<stdlib.h>
+	"Geometric_Primitives.h"
+
+1487890649 source:c:\users\michael\desktop\projects\sandbox\rendering\mesh.cpp
+	"Mesh.h"
+	<vector>
+	<stdio.h>
+	<assimp/Importer.hpp>
+	<assimp/scene.h>
+	<assimp/postprocess.h>
+
+1488267034 source:c:\users\michael\desktop\projects\sandbox\rendering\particle_emitter.cpp
 	"Particle_Emitter.h"
+	"../stb_perlin.h"
+
+1488178507 source:c:\users\michael\desktop\projects\sandbox\rendering\shader.cpp
+	"Shader.h"
+	<SDL.h>
+	<fstream>
+	<iostream>
+
+1488267071 source:c:\users\michael\desktop\projects\sandbox\rendering\texture.cpp
+	"Texture.h"
+	"../stb_image.h"
+	<cassert>
+	<iostream>
 

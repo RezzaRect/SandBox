@@ -1,6 +1,6 @@
 #include "Particle_Emitter.h"
 
-#include "stb_perlin.h"
+#include "../stb_perlin.h"
 
 ParticleEmitter::ParticleEmitter(int numParticles, glm::vec3& spawnPoint, glm::ivec3& color, int particlesPerFrame){
     GLuint VertexArrayID;

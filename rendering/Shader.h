@@ -6,9 +6,8 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 
-#include "Camera.h"
-#include "Transform.h"
-
+#include "../core/Camera.h"
+#include "../core/Transform.h"
 // Reference: https://github.com/BennyQBD/ModernOpenGLTutorial
 
 class Shader

@@ -44,9 +44,9 @@ int main(int argc, char** argv)
 
     glm::vec3 sp = glm::vec3(0.0, 10.0, 0.0);
     glm::ivec3 white = glm::vec3(255.0);
-    ParticleEmitter* particles = new ParticleEmitter(3000, sp, white, 10);
+    ParticleEmitter* particles = new ParticleEmitter(2500, sp, white, 10);
     sp.x += 10.0f;
-    ParticleEmitter* particles1= new ParticleEmitter(3000, sp, white, 10);
+    ParticleEmitter* particles1= new ParticleEmitter(2500, sp, white, 10);
 
 
 	// Initialize The physics world.
@@ -79,6 +79,7 @@ int main(int argc, char** argv)
     glm::vec3 orientation(1.0f);
     glm::vec3 position(0.0f, -20.0f, 0.0f);
     addPlane(orientation, position, &dynamicsWorld);
+
 
     setupBoxPositions(rigidbodies, &dynamicsWorld, MAX_OBJECTS);
 

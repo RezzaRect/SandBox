@@ -1,19 +1,19 @@
 #ifndef PROJECT_INCLUDES_H_INCLUDED
 #define PROJECT_INCLUDES_H_INCLUDED
 
-#include "Display.h"
-#include "Mesh.h"
-#include "Shader.h"
-#include "Camera.h"
-#include "Transform.h"
-#include "Texture.h"
+#include "core/Display.h"
+#include "core/Camera.h"
+#include "rendering/Shader.h"
+#include "core/Camera.h"
+#include "core/Transform.h"
+#include "rendering/Texture.h"
 //#include "obj_loader.h"
-#include "Geometric_Primitives.h"
-#include "Clock.h"
-#include "BulletDebugDeprecatedGL.h"
+#include "rendering/Geometric_Primitives.h"
+#include "core/Clock.h"
+#include "physics/BulletDebugDeprecatedGL.h"
 //#include "Raycast.h"
-#include "BulletPhysics.h"
+#include "physics/BulletPhysics.h"
 //#include "Model.h"
-#include "Particle_Emitter.h"
+#include "rendering/Particle_Emitter.h"
 
 #endif // PROJECT_INCLUDES_H_INCLUDED

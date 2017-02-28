@@ -16,7 +16,7 @@
 
 #include <SDL.h>
 
-#include "Camera.h"
+#include "../core/Camera.h"
 
 //#define MaxParticles 15000
 
