@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1488266233 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1488438763 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -287,4 +287,16 @@
 	"../stb_image.h"
 	<cassert>
 	<iostream>
+
+1470720162 source:c:\users\michael\desktop\projects\sandbox\staticlibs\stb_image.c
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	<assert.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdint.h>
 
