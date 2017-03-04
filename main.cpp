@@ -16,7 +16,7 @@
 #define WIDTH 1024
 #define HEIGHT 600
 
-
+const float TIME_STEP = 1.0f / 60.0f;
 // For updating movement and simulation
 const float DESIRED_FPS = 60.0f;
 // Just for frame time or rendering
@@ -57,17 +57,23 @@ int main(int argc, char** argv)
 	//Loading textures and shaders from file...
 	Shader shader("./res/shaders/basicShader");
 	Shader particleShader("./res/shaders/particleShader");
+	Shader screenShader("./res/shaders/screenShader");
+
     Texture texture("./res/textures/container2.png"); //lvv.jpg
     //Texture texture("./res/textures/brickwall.jpg"); //lvv.jpg
-
-    Texture texture2("./res/textures/container2_specular.png"); // bricks.jpg
+    //Texture texture2("./res/textures/container2_specular.png"); // bricks.jpg
     //Texture texture2("./res/textures/brickwall_normal.jpg"); // bricks.jpg
-
     Texture texture3("./res/textures/soccer3.jpg");
     Texture bamboo("./res/textures/bamboo.jpg");
     //Texture gunTex("./res/models/normal_up.jpg");
     Texture particleTexture("./res/textures/Cloud-particle.png");
     Texture particleTexture2("./res/textures/pss.png");
+
+    Texture* g_tempTarget = NULL;
+    int dataSize = WIDTH * HEIGHT * 4;
+    unsigned char* data = new unsigned char[dataSize];
+    g_tempTarget = new Texture(WIDTH, HEIGHT, data, GL_TEXTURE_2D, GL_NEAREST, GL_COLOR_ATTACHMENT0);
+
 
     Transform planeTransform;
     Transform modelTransform;
@@ -75,6 +81,7 @@ int main(int argc, char** argv)
     Mesh* sphere = new Mesh(setupSphere(1.0f, 15.f, 15.f));
     Mesh* cube = new Mesh(setupCube(1.0f));
     Mesh* plane = new Mesh(setupLowDensityPlane(30.0f));
+    Mesh* fsQuad = new Mesh(setupFullScreenQuad(0.95));
 
     glm::vec3 orientation(1.0f);
     glm::vec3 position(0.0f, -20.0f, 0.0f);
@@ -100,9 +107,13 @@ int main(int argc, char** argv)
     SDL_ShowCursor(SDL_DISABLE);
 
 	while(!glDisplay->isClosed){
-        //Clear(0.0f, 0.15f, 0.3f, 1.0f);
+
+        g_tempTarget->BindAsRenderTarget();
         Clear(0.0f, 0.0f, 0.0f, 1.0f);
-        glDisable(GL_BLEND);
+        //Nessecary..?
+        //glDisable(GL_BLEND);
+
+        glEnable(GL_DEPTH_TEST);
 
         sphereLimiter++;
         float newTicks = SDL_GetTicks();
@@ -132,7 +143,7 @@ int main(int argc, char** argv)
         UpdateCam(&cam, WIDTH, HEIGHT, totalDeltaTime);
         glm::vec3 translate(0.0f,0.0f,0.0f);
         texture.Bind(0);
-        texture2.Bind(1);
+        //texture2.Bind(1);
         //glPolygonMode(GL_FRONT, GL_LINE);
         //glPolygonMode(GL_BACK, GL_LINE);
         for(int i = 0; i < MAX_OBJECTS; i++){
@@ -149,6 +160,7 @@ int main(int argc, char** argv)
             physicsTransforms(&bulletTransform, rigidbodies, i);
             shader.Update(*bulletTransform, *cam);
             sphere->Draw();
+            //fsQuad->Draw();
         }
 
         glm::vec3 planePosition(0.0f, -19.9f, 0.0f);
@@ -193,6 +205,21 @@ int main(int argc, char** argv)
         particleTexture2.Bind(0);
         particles1->RenderParticles();
 
+        /////////////////////////////////////////////////////
+        // Bind to default framebuffer again and draw the
+        // quad plane with attched screen texture.
+        // //////////////////////////////////////////////////
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        // Clear all relevant buffers
+        Clear(0.0f, 0.15f, 0.3f, 1.0f);
+        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
+        glClear(GL_COLOR_BUFFER_BIT);
+        glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
+
+        // Draw Screen
+        g_tempTarget->Bind(0);
+        screenShader.Bind();
+        fsQuad->Draw();
 
 
         UpdateDisplay(&glDisplay, "Updated");
@@ -210,7 +237,6 @@ int main(int argc, char** argv)
             nbFrames = 0;
             lastTime += 1.0;
         }
-
 
         while(clock.getElapsedTime()/1000.0 < 1.0 / FRAME_CAP)
             ;

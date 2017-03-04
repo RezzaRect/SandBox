@@ -40,6 +40,7 @@
 		<Unit filename="core/Display.cpp" />
 		<Unit filename="core/Display.h" />
 		<Unit filename="core/Transform.h" />
+		<Unit filename="core/referenceCounter.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="physics/BulletDebugDeprecatedGL.h" />
 		<Unit filename="physics/BulletPhysics.cpp" />

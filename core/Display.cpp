@@ -19,7 +19,7 @@ void InitDisplay(Display** disp, int width, int height){
 
 
 	//SDL_Window* m_window
-	(*disp)->window = SDL_CreateWindow("Sand-Box", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP); //
+	(*disp)->window = SDL_CreateWindow("Sand-Box", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL); // | SDL_WINDOW_FULLSCREEN_DESKTOP
 	//SDL_GLContext m_glContext =
 	(*disp)->glContext = (SDL_GLContext*)SDL_GL_CreateContext((*disp)->window);
 

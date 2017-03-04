@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1488438763 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1488569229 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
@@ -221,7 +221,7 @@
 	<SDL.h>
 	<glm/gtx/rotate_vector.hpp>
 
-1488173835 source:c:\users\michael\desktop\projects\sandbox\core\display.cpp
+1488568876 source:c:\users\michael\desktop\projects\sandbox\core\display.cpp
 	"Display.h"
 	<iostream>
 	<stdio.h>
@@ -235,11 +235,16 @@
 	"../core/Camera.h"
 	"../core/Transform.h"
 
-1474600046 c:\users\michael\desktop\projects\sandbox\rendering\texture.h
+1488518310 c:\users\michael\desktop\projects\sandbox\rendering\texture.h
+	"../core/referenceCounter.h"
+	<GL/glew.h>
+	<string>
+	<map>
 	<string>
 	<GL/glew.h>
+	"referenceCounter.h"
 
-1487826069 c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.h
+1488517901 c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.h
 	"Mesh.h"
 
 1487745556 c:\users\michael\desktop\projects\sandbox\rendering\mesh.h
@@ -260,7 +265,7 @@
 	<SDL.h>
 	"../core/Camera.h"
 
-1487890894 source:c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.cpp
+1488517901 source:c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.cpp
 	<stdlib.h>
 	"Geometric_Primitives.h"
 
@@ -272,9 +277,9 @@
 	<assimp/scene.h>
 	<assimp/postprocess.h>
 
-1488267034 source:c:\users\michael\desktop\projects\sandbox\rendering\particle_emitter.cpp
+1488518365 source:c:\users\michael\desktop\projects\sandbox\rendering\particle_emitter.cpp
 	"Particle_Emitter.h"
-	"../stb_perlin.h"
+	"../staticLibs/stb_perlin.h"
 
 1488178507 source:c:\users\michael\desktop\projects\sandbox\rendering\shader.cpp
 	"Shader.h"
@@ -282,11 +287,11 @@
 	<fstream>
 	<iostream>
 
-1488267071 source:c:\users\michael\desktop\projects\sandbox\rendering\texture.cpp
+1488522330 source:c:\users\michael\desktop\projects\sandbox\rendering\texture.cpp
 	"Texture.h"
-	"../stb_image.h"
-	<cassert>
+	"../staticLibs/stb_image.h"
 	<iostream>
+	<cassert>
 
 1470720162 source:c:\users\michael\desktop\projects\sandbox\staticlibs\stb_image.c
 	<stdio.h>
@@ -299,4 +304,12 @@
 	<stdarg.h>
 	<stddef.h>
 	<stdint.h>
+
+1479065911 c:\users\michael\desktop\projects\sandbox\core\referencecounter.h
+
+1473320363 c:\users\michael\desktop\projects\sandbox\staticlibs\stb_perlin.h
+	<math.h>
+
+1470720162 c:\users\michael\desktop\projects\sandbox\staticlibs\stb_image.h
+	<stdio.h>
 

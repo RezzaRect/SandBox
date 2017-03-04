@@ -194,3 +194,40 @@ Mesh setupHighDensityPlane(int mapSize, float density, bool bump){
 
     return Mesh(model);
 }
+
+
+
+Mesh setupFullScreenQuad(float quadSize){
+    IndexedModel model;
+    //https://www.shadertoy.com/view/ltcSzMif(abs(uv.y) > 0.75) color = vec4(0.0);, GLenum attachment
+    Vertex cubeVertices[] = {
+        // FRONT SIDE
+        Vertex(glm::vec3(-quadSize, quadSize, 0.0f), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(-quadSize, -quadSize, 0.0f), glm::vec2(0.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(quadSize, -quadSize, 0.0f), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+
+        Vertex(glm::vec3(-quadSize, quadSize, 0.0f), glm::vec2(0.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(quadSize, -quadSize, 0.0f), glm::vec2(1.0, 0.0), glm::vec3(0.0, 0.0, 1.0)),
+        Vertex(glm::vec3(quadSize, quadSize, 0.0f), glm::vec2(1.0, 1.0), glm::vec3(0.0, 0.0, 1.0)),
+    };
+
+
+    unsigned int indices[] = { 0,  1,  2,  3,  4,  5 };
+
+    int vertSize = sizeof(cubeVertices) / sizeof(cubeVertices[0]);
+    int indicesSize = sizeof(indices) / sizeof(indices[0]);
+
+    for(int i = 0; i < vertSize; i++){
+        model.normals.push_back(*cubeVertices[i].GetNormal());
+        model.texCoords.push_back(*cubeVertices[i].GetTexCoord());
+        model.positions.push_back(*cubeVertices[i].GetPos());
+    }
+
+    for(int i = 0; i < indicesSize; i++)
+        model.indices.push_back(indices[i]);
+
+    //return Mesh mesh(cubeVertices, sizeof(cubeVertices)/sizeof(cubeVertices[0]), indices, sizeof(indices)/sizeof(indices[0]));
+
+    //return mesh;
+    return Mesh(model);
+}

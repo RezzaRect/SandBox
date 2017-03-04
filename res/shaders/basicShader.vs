@@ -21,14 +21,6 @@ void main()
     gl_Position = mvp * vec4(position, 1.0);
     texCoord0 = texCoord;
     normal0 = (model * vec4(normal, 0.0)).xyz;
-    //vec3 n = normalize((model * vec4(normal, 0.0)).xyz);
-    //vec3 t = normalize((model * vec4(tangent, 0.0)).xyz);
-
-    //t = normalize(t - dot(t, n) * n);
-
-    //vec3 biTangent = cross(t, n);
-
-    //tbnMatrix = mat3(t, biTangent, n);
 
     vec3 n = normalize((model * vec4(normal, 0.0)).xyz);
     vec3 t = normalize((model * vec4(tangent, 0.0)).xyz);
@@ -36,7 +28,6 @@ void main()
     
     vec3 biTangent = cross(t, n);
     tbnMatrix = mat3(t, biTangent, n);
-
 
     //world position..?
     fragPos0 = (model * vec4(position, 1.0)).xyz;
