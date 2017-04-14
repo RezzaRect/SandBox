@@ -206,6 +206,7 @@ void setupDeferredRendering(GLuint& gBuffer, GLuint& gPosition, GLuint& gNormal,
 	glClearColor(0.0f, 0.4f, 0.69f, 1.0f);
 }
 
+// Reference: https://learnopengl.com/#!Advanced-OpenGL/Cubemaps
 GLuint loadCubemap(std::vector<std::string> faces){
     GLuint textureID;
     glGenTextures(1, &textureID);

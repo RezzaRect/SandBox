@@ -18,7 +18,7 @@
 	<SDL.h>
 	<string>
 
-1492195814 source:c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.cpp
+1492199999 source:c:\users\michael\desktop\projects\sandbox\rendering\geometric_primitives.cpp
 	<stdlib.h>
 	<iostream>
 	"../staticLibs/stb_image.h"
@@ -36,7 +36,7 @@
 	<vector>
 	<glm/glm.hpp>
 
-1492198906 source:c:\users\michael\desktop\projects\sandbox\rendering\mesh.cpp
+1492199558 source:c:\users\michael\desktop\projects\sandbox\rendering\mesh.cpp
 	"Mesh.h"
 	<vector>
 	<stdio.h>
@@ -77,7 +77,7 @@
 	<glm/gtx/quaternion.hpp>
 	"Camera.h"
 
-1492135470 source:c:\users\michael\desktop\projects\sandbox\rendering\texture.cpp
+1492200246 source:c:\users\michael\desktop\projects\sandbox\rendering\texture.cpp
 	"Texture.h"
 	"../staticLibs/stb_image.h"
 	<iostream>
@@ -104,14 +104,14 @@
 	<stddef.h>
 	<stdint.h>
 
-1492196295 source:c:\users\michael\desktop\projects\sandbox\main.cpp
+1492200397 source:c:\users\michael\desktop\projects\sandbox\main.cpp
 	<iostream>
 	<stdio.h>
 	<time.h>
 	<SDL.h>
 	"project_includes.h"
 
-1491624340 c:\users\michael\desktop\projects\sandbox\project_includes.h
+1492200488 c:\users\michael\desktop\projects\sandbox\project_includes.h
 	"core/Display.h"
 	"core/Camera.h"
 	"rendering/Shader.h"
@@ -123,7 +123,7 @@
 	"physics/BulletDebugDeprecatedGL.h"
 	"physics/BulletPhysics.h"
 	"rendering/Particle_Emitter.h"
-	"rendering/Model.h"
+	"staticLibs/stb_image.h"
 
 1474603646 c:\users\michael\desktop\projects\sandbox\core\clock.h
 	<SDL.h>

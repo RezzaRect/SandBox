@@ -66,13 +66,6 @@ void IndexedModel::ComputeTangetBasis()
         tangent.y = (f * (deltaV2 * edge1.y - deltaV1 * edge2.y));
         tangent.z = (f * (deltaV2 * edge1.z - deltaV1 * edge2.z));
 
-//Bitangent example, in Java
-//		Vector3f bitangent = new Vector3f(0,0,0);
-//
-//		bitangent.setX(f * (-deltaU2 * edge1.getX() - deltaU1 * edge2.getX()));
-//		bitangent.setX(f * (-deltaU2 * edge1.getY() - deltaU1 * edge2.getY()));
-//		bitangent.setX(f * (-deltaU2 * edge1.getZ() - deltaU1 * edge2.getZ()));
-
 		tangents[i0] += tangent;
 		tangents[i1] += tangent;
 		tangents[i2] += tangent;

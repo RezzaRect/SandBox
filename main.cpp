@@ -267,11 +267,6 @@ int main(int argc, char** argv)
 
 
 #ifndef USE_DEFERRED_RENDERER
-
-
-
-
-
         Transform tmptr;
         particleShader.Bind();
         particleTexture.Bind(0);
@@ -354,6 +349,7 @@ int main(int argc, char** argv)
 	delete cube;
 	delete sphere;
 	delete bulletTransform;
+	delete terrain;
 
     return 0;
 }

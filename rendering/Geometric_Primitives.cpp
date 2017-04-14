@@ -246,6 +246,9 @@ inline float GetPercentage( float value, const float min, const float max )
     return ( value - min ) / ( max - min );
 }
 //Mesh Terrain(const std::string& fileName, float hScale, unsigned char** data, int w, int h, int bpp){
+// Reference: http://stackoverflow.com/questions/23076778/opengl-optimal-way-to-draw-environment-from-height-array
+//          : https://www.3dgep.com/multi-textured-terrain-in-opengl/
+
 Mesh Terrain(float hScale, unsigned char** data, int w, int h, int bpp){
 	//unsigned char* image = SOIL_load_image(imagePath, &width, &height, 0, SOIL_LOAD_RGB);
 	IndexedModel model;
