@@ -19,15 +19,16 @@ class Shader
         void Update(const Transform& transform, Camera& camera);
 
         virtual ~Shader();
+        GLuint m_program;
     protected:
 
     private:
         static const unsigned int NUM_SHADERS = 2;
-        static const unsigned int NUM_UNIFORMS = 12;
+        static const unsigned int NUM_UNIFORMS = 16;
         //Shader(const Shader& other){}
         //void Shader& operator=(const Shader& other){}
 
-        GLuint m_program;
+
         GLuint m_shaders[NUM_SHADERS];
         GLuint m_uniforms[NUM_UNIFORMS];
 };

@@ -1,11 +1,19 @@
 #include <stdlib.h>
+#include <iostream>
 //#include "stb_perlin.h"
+#include "../staticLibs/stb_image.h"
 
 #include "Geometric_Primitives.h"
 // \/ \/ was defined in main... M_PI at least...
 #define M_PI 3.14159265358979323846 /* pi */
 #define M_PI_2 1.57079632679489661923 /* pi/2 */
 #define M_PI_4 0.78539816339744830962 /* pi/4 */
+
+int rgbToGrayscale(int r, int g, int b){
+	//averaging comp
+	return (r + g + b) / 3;
+
+}
 
 // https://gist.github.com/davidbitton/1094320
 Mesh setupSphere(float radius, float latitudeBands, float longitudeBands){
@@ -231,3 +239,95 @@ Mesh setupFullScreenQuad(float quadSize){
     //return mesh;
     return Mesh(model);
 }
+
+inline float GetPercentage( float value, const float min, const float max )
+{
+    value = glm::clamp( value, min, max );
+    return ( value - min ) / ( max - min );
+}
+//Mesh Terrain(const std::string& fileName, float hScale, unsigned char** data, int w, int h, int bpp){
+Mesh Terrain(float hScale, unsigned char** data, int w, int h, int bpp){
+	//unsigned char* image = SOIL_load_image(imagePath, &width, &height, 0, SOIL_LOAD_RGB);
+	IndexedModel model;
+	int width, height, bytesPerPixel;
+	width = w;
+	height = h;
+	bytesPerPixel = bpp;
+	//unsigned char* image = stbi_load(fileName.c_str(), &width, &height, &bytesPerPixel, 3);
+	std::cout << "Width: " << width << " Height: " << height << "Bytes per pixel: " << bytesPerPixel << std::endl;
+    std::cout << "MemoryLoc: " << data << std::endl;
+
+    unsigned int numVerts = width * height;
+    model.positions.resize( numVerts );
+    model.normals.resize( numVerts );
+    model.texCoords.resize( numVerts );
+
+    float terrainWidth = ( width - 1 ) * 1.0f;//m_fBlockScale;
+    float terrainHeight = ( height - 1 ) * 1.0f;//m_fBlockScale;
+
+    float halfTerrainWidth = terrainWidth * 0.5f;
+    float halfTerrainHeight = terrainHeight * 0.5f;
+
+    for ( unsigned int j = 0; j < height; ++j )
+    {
+        for ( unsigned i = 0; i < width; ++i )
+        {
+            unsigned int index = ( j * width ) + i;
+            //assert( index * bytesPerPixel < fileSize );
+            //float heightValue = GetHeightValue( &image[index * bytesPerPixel], bytesPerPixel );
+
+            float S = ( i / (float)(width - 1) );
+            float T = ( j / (float)(height - 1) );
+
+            unsigned char r = (*data)[(i + j * width) * 3 + 0];
+            unsigned char g = (*data)[(i + j * width) * 3 + 1];
+            unsigned char b = (*data)[(i + j * width) * 3 + 2];
+            int gValue = rgbToGrayscale((int)r, (int)g, (int)b);
+
+            float X = ( S * terrainWidth ) - halfTerrainWidth;
+            float Y = gValue * hScale;//m_fHeightScale;
+            float Z = ( T * terrainHeight ) - halfTerrainHeight;
+
+            // Blend 3 textures depending on the height of the terrain
+            //float tex0Contribution = 1.0f - GetPercentage( heightValue, 0.0f, 0.75f );
+            //float tex2Contribution = 1.0f - GetPercentage( heightValue, 0.75f, 1.0f );
+
+            model.normals[index] = glm::vec3(0);
+            model.positions[index] = glm::vec3( X, Y, Z );
+            model.texCoords[index] = glm::vec2( S, T );
+        }
+    }
+
+    int terrainWidthInd = width;
+    int terrainHeightInd = height;
+
+    // 2 triangles for every quad of the terrain mesh
+    const unsigned int numTriangles = ( terrainWidthInd - 1 ) * ( terrainHeightInd - 1 ) * 2;
+
+    // 3 indices for each triangle in the terrain mesh
+    model.indices.resize( numTriangles * 3 );
+
+    unsigned int index = 0; // Index in the index buffer
+    for (unsigned int j = 0; j < (terrainHeightInd - 1); ++j )
+    {
+        for (unsigned int i = 0; i < (terrainWidthInd - 1); ++i )
+        {
+            int vertexIndex = ( j * terrainWidthInd ) + i;
+            // Top triangle (T0)
+            model.indices[index++] = vertexIndex;                           // V0
+            model.indices[index++] = vertexIndex + terrainWidthInd + 1;        // V3
+            model.indices[index++] = vertexIndex + 1;                       // V1
+            // Bottom triangle (T1)
+            model.indices[index++] = vertexIndex;                           // V0
+            model.indices[index++] = vertexIndex + terrainWidthInd;            // V2
+            model.indices[index++] = vertexIndex + terrainWidthInd + 1;        // V3
+        }
+    }
+
+	model.CalcNormals();
+	//model.ComputeTangetBasis();
+
+	return Mesh(model);
+}
+
+

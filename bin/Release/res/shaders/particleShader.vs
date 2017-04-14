@@ -79,7 +79,9 @@ void main()
 	float ns2 = fbm(normalize(xyzs.xyz*1.5))*7.;
 
 	// Output position of the vertex
-	gl_Position = VP * vec4(vec3(vertexPosition_worldspace.x+ns,vertexPosition_worldspace.y-ns1,vertexPosition_worldspace.z+ns2), 1.0f);
+	gl_Position = VP * vec4(vec3(vertexPosition_worldspace.x + ns,
+								 vertexPosition_worldspace.y - ns1,
+								 vertexPosition_worldspace.z + ns2), 1.0f);
 
 	// UV of the vertex. No special space for this one.
 	UV = squareVertices.xy + vec2(0.5, 0.5);

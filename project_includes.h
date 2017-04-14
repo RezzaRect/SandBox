@@ -15,5 +15,6 @@
 #include "physics/BulletPhysics.h"
 //#include "Model.h"
 #include "rendering/Particle_Emitter.h"
+#include "rendering/Model.h"
 
 #endif // PROJECT_INCLUDES_H_INCLUDED

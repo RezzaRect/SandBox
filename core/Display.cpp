@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 
-void InitDisplay(Display** disp, int width, int height){
+void InitDisplay(Display** disp, int width, int height, bool fullScreen){
 
     SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -17,9 +17,12 @@ void InitDisplay(Display** disp, int width, int height){
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 
-
 	//SDL_Window* m_window
-	(*disp)->window = SDL_CreateWindow("Sand-Box", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL); // | SDL_WINDOW_FULLSCREEN_DESKTOP
+	if(fullScreen)
+        (*disp)->window = SDL_CreateWindow("Sand-Box", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP); //
+	else
+        (*disp)->window = SDL_CreateWindow("Sand-Box", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+
 	//SDL_GLContext m_glContext =
 	(*disp)->glContext = (SDL_GLContext*)SDL_GL_CreateContext((*disp)->window);
 

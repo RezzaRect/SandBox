@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <btBulletDynamicsCommon.h>
+#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+//#include <btHeightFieldTerrianShape.h>
+//#include <btHeightfieldTerrainShape.h>
 //#include "core/Camera.h"
 //#include "core/Transform.h"
 #include "../project_includes.h"
@@ -20,6 +23,13 @@ void addCube(glm::vec3& dimension, glm::vec3& position, float mass, glm::vec3& o
              btDiscreteDynamicsWorld** world, std::vector<btRigidBody*> &bodies, int numAdded);
 
 void addPlane(glm::vec3& orientation, glm::vec3& position, btDiscreteDynamicsWorld** world);
+
+//void addTerrain(glm::vec3& orientation, glm::vec3& position, btDiscreteDynamicsWorld** world,
+//                const std::string& fileName, float hScale, unsigned char** data, int w, int h, int bpp){
+
+void addTerrain(glm::vec3& orientation, glm::vec3& position, btDiscreteDynamicsWorld** world,
+                float hScale, unsigned char** data, int w, int h, int bpp);
+
 //Transform
 void physicsTransforms(Transform** transform, std::vector<btRigidBody*> &bodies, int index);
 

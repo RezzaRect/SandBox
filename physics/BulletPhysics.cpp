@@ -1,6 +1,11 @@
 #include "BulletPhysics.h"
 //#include "Raycast.h"
 
+int rgbToGS(int r, int g, int b){
+	//averaging comp
+	return (r + g + b) / 3;
+
+}
 
 btDiscreteDynamicsWorld* intitBullet(float gravity){
     /* ------------- START BULLET INITIALIZATION ------------------- */
@@ -107,6 +112,91 @@ void addPlane(glm::vec3& orientation, glm::vec3& position, btDiscreteDynamicsWor
     (*world)->addRigidBody(groundRigidBody);
     //return groundRigidBody;
 }
+//void addTerrain(glm::vec3& orientation, glm::vec3& position, btDiscreteDynamicsWorld** world,
+//                const std::string& fileName, float hScale, unsigned char** data, int w, int h, int bpp){
+
+// http://opensimulator.org/git/opensim-libs-save/BulletPhysics/bulletTrunk/Demos/VehicleDemo/VehicleDemo.cpp
+void addTerrain(glm::vec3& orientation, glm::vec3& position, btDiscreteDynamicsWorld** world,
+                float hScale, unsigned char** data, int w, int h, int bpp){
+
+    int width, height, bytesPerPixel;
+    width = w;
+    height = h;
+    bytesPerPixel = bpp;
+	//unsigned char* data2 = stbi_load(fileName.c_str(), &width, &height, &bytesPerPixel, 3);
+
+    std::cout << "MemoryLoc: " << data << std::endl;
+    int i;
+
+    const float TRIANGLE_SIZE=1.0f;
+
+	//create a triangle-mesh ground
+	int vertStride = sizeof(btVector3);
+	int indexStride = 3*sizeof(int);
+
+	const int NUM_VERTS_X = width;
+	const int NUM_VERTS_Y = height;
+	const int totalVerts = NUM_VERTS_X*NUM_VERTS_Y;
+
+	const int totalTriangles = 2*(NUM_VERTS_X-1)*(NUM_VERTS_Y-1);
+
+	btVector3* m_vertices = new btVector3[totalVerts];
+	int*	gIndices = new int[totalTriangles*3];
+
+
+
+	for ( i=0;i<NUM_VERTS_X;i++)
+	{
+		for (int j=0;j<NUM_VERTS_Y;j++)
+		{
+			//float wl = .2f;
+			//height set to zero, but can also use curved landscape, just uncomment out the code
+			float height = 0.f;//20.f*sinf(float(i)*wl)*cosf(float(j)*wl);
+			unsigned char r = (*data)[(i + j * width) * 3 + 0];
+            unsigned char g = (*data)[(i + j * width) * 3 + 1];
+            unsigned char b = (*data)[(i + j * width) * 3 + 2];
+            height = rgbToGS((int)r, (int)g, (int)b);
+
+
+			m_vertices[i+j*NUM_VERTS_X].setValue(
+				(i-NUM_VERTS_X*0.5f)*TRIANGLE_SIZE,
+				height*hScale,
+				(j-NUM_VERTS_Y*0.5f)*TRIANGLE_SIZE);
+
+		}
+	}
+
+	int index=0;
+	for ( i=0;i<NUM_VERTS_X-1;i++)
+	{
+		for (int j=0;j<NUM_VERTS_Y-1;j++)
+		{
+			gIndices[index++] = j*NUM_VERTS_X+i;
+			gIndices[index++] = j*NUM_VERTS_X+i+1;
+			gIndices[index++] = (j+1)*NUM_VERTS_X+i+1;
+
+			gIndices[index++] = j*NUM_VERTS_X+i;
+			gIndices[index++] = (j+1)*NUM_VERTS_X+i+1;
+			gIndices[index++] = (j+1)*NUM_VERTS_X+i;
+		}
+	}
+
+	btTriangleIndexVertexArray* m_indexVertexArrays = new btTriangleIndexVertexArray(totalTriangles,
+		gIndices,
+		indexStride,
+		totalVerts,(btScalar*) &m_vertices[0].x(),vertStride);
+
+	bool useQuantizedAabbCompression = true;
+	btCollisionShape*  groundShape = new btBvhTriangleMeshShape(m_indexVertexArrays,useQuantizedAabbCompression);
+
+	//tr.setOrigin(btVector3(0,-4.5f,0));
+	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(.5, -19.85, .5)));
+    btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+    btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    //groundRigidBody->setRestitution(1.0f);
+    (*world)->addRigidBody(groundRigidBody);
+}
+
 //Transform
 void physicsTransforms(Transform** transform, std::vector<btRigidBody*> &bodies, int index){
     //Transform transform;
@@ -132,7 +222,7 @@ void physicsTransforms(Transform** transform, std::vector<btRigidBody*> &bodies,
 void setupBoxPositions(std::vector<btRigidBody*> &bodies, btDiscreteDynamicsWorld** world, int totalBoxes){
     int amountPerLevel = 10;
     float radius = 5.5f;
-    float boxy = -19.80f;
+    float boxy = 50.0f;//-19.80f;
     //float displacement = 0.75f;
     int j = 0;
     for(int i = 0; i < totalBoxes; i++){
@@ -165,7 +255,7 @@ void setupBoxPositions(std::vector<btRigidBody*> &bodies, btDiscreteDynamicsWorl
 }
 
 void resetBoxPositions(std::vector<btRigidBody*> &bodies, btDiscreteDynamicsWorld** world, int totalBoxes, int sphereAdded){
-    float boxy = -19.8f;
+    float boxy = 50.0f;//-19.8f;
     int amountPerLevel = 10;
     int j = 0;
     float radius = 5.5f;

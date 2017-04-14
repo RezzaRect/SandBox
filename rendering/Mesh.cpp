@@ -3,9 +3,9 @@
 #include <vector>
 #include <stdio.h>
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+//#include <assimp/Importer.hpp>
+//#include <assimp/scene.h>
+//#include <assimp/postprocess.h>
 
 void IndexedModel::CalcNormals()
 {
@@ -160,104 +160,3 @@ void Mesh::Draw(){
     glBindVertexArray(0);
 }
 
-
-/*
-    glGenVertexArrays(1, &m_vertexArrayObject);
-    glBindVertexArray(m_vertexArrayObject);
-
-    glGenBuffers(NUM_BUFFERS, m_vertexArrayBuffers);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[POSITION_VB]);
-    glBufferData(GL_ARRAY_BUFFER, model.positions.size() * sizeof(model.positions[0]), &model.positions[0], GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[TEXCOORD_VB]);
-    glBufferData(GL_ARRAY_BUFFER, model.texCoords.size() * sizeof(model.texCoords[0]), &model.texCoords[0], GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[NORMAL_VB]);
-    glBufferData(GL_ARRAY_BUFFER, model.normals.size() * sizeof(model.normals[0]), &model.normals[0], GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexArrayBuffers[INDEX_VB]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.indices.size() * sizeof(model.indices[0]), &model.indices[0], GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(3);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[TANGENT_VB]);
-    glBufferData(GL_ARRAY_BUFFER, model.tangents.size() * sizeof(model.tangents[0]), &model.tangents[0], GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(4);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[BITANGENT_VB]);
-    glBufferData(GL_ARRAY_BUFFER, model.bitangents.size() * sizeof(model.bitangents[0]), &model.bitangents[0], GL_STATIC_DRAW);
-
-    glBindVertexArray(0);
-    */
-
-
-    /*
-void IndexedModel::ComputeTangetBasis(){
-    printf("gg");
-    for (unsigned int i=0; i<positions.size(); i+=3 ){
-
-        //printf("cc");
-		// Shortcuts for vertices
-		glm::vec3 & v0 = positions[i+0];
-		glm::vec3 & v1 = positions[i+1];
-		glm::vec3 & v2 = positions[i+2];
-
-		// Shortcuts for UVs
-		glm::vec2 & uv0 = texCoords[i+0];
-		glm::vec2 & uv1 = texCoords[i+1];
-		glm::vec2 & uv2 = texCoords[i+2];
-
-		// Edges of the triangle : postion delta
-		glm::vec3 deltaPos1 = v1-v0;
-		glm::vec3 deltaPos2 = v2-v0;
-
-		// UV delta
-		glm::vec2 deltaUV1 = uv1-uv0;
-		glm::vec2 deltaUV2 = uv2-uv0;
-
-		float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
-		glm::vec3 tangent = (deltaPos1 * deltaUV2.y   - deltaPos2 * deltaUV1.y)*r;
-		glm::vec3 bitangent = (deltaPos2 * deltaUV1.x   - deltaPos1 * deltaUV2.x)*r;
-
-		// Set the same tangent for all three vertices of the triangle.
-		// They will be merged later, in vboindexer.cpp
-		tangents.push_back(tangent);
-		tangents.push_back(tangent);
-		tangents.push_back(tangent);
-
-		// Same thing for binormals
-		bitangents.push_back(bitangent);
-		bitangents.push_back(bitangent);
-		bitangents.push_back(bitangent);
-
-	}
-
-	// See "Going Further"
-	for (unsigned int i=0; i<positions.size(); i+=1 )
-	{
-		glm::vec3 & n = normals[i];
-		glm::vec3 & t = tangents[i];
-		glm::vec3 & b = bitangents[i];
-
-		// Gram-Schmidt orthogonalize
-		t = glm::normalize(t - n * glm::dot(n, t));
-
-		// Calculate handedness
-		if (glm::dot(glm::cross(n, t), b) < 0.0f){
-			t = t * -1.0f;
-		}
-	}
-}
-*/

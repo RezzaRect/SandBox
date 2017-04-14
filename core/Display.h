@@ -15,7 +15,7 @@ struct Display
     bool isClosed;
 };
 
-void InitDisplay(Display** disp, int width, int height);
+void InitDisplay(Display** disp, int width, int height, bool fullScreen);
 void Clear(float r, float g, float b, float a);
 void SwapBuffers(Display** disp);
 void CloseWindow(Display** disp);

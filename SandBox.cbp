@@ -50,6 +50,7 @@
 		<Unit filename="rendering/Geometric_Primitives.h" />
 		<Unit filename="rendering/Mesh.cpp" />
 		<Unit filename="rendering/Mesh.h" />
+		<Unit filename="rendering/Model.h" />
 		<Unit filename="rendering/Particle_Emitter.cpp" />
 		<Unit filename="rendering/Particle_Emitter.h" />
 		<Unit filename="rendering/Shader.cpp" />

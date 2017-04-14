@@ -7,14 +7,12 @@
 
 #include "project_includes.h"
 
-// Include GLM
-#include <glm/glm.hpp>
-
 #define PHYSICS_TEST
-#define DEBUG_RENDERER
+//#define DEBUG_RENDERER
+//#define USE_DEFERRED_RENDERER
 
-#define WIDTH 1024
-#define HEIGHT 600
+#define WIDTH 1366
+#define HEIGHT 768
 
 const float TIME_STEP = 1.0f / 60.0f;
 // For updating movement and simulation
@@ -30,63 +28,100 @@ const float DESIRED_FRAMETIME = MS_PER_FRAME / DESIRED_FPS;
 
 int main(int argc, char** argv)
 {
+    GLuint gBuffer;
+    GLuint gPosition, gNormal, gAlbedoSpec;
 
     Transform* bulletTransform = new Transform;
     Display* glDisplay = new Display;
     Camera* cam = new Camera;
 
-	InitDisplay(&glDisplay, WIDTH, HEIGHT);
+	InitDisplay(&glDisplay, WIDTH, HEIGHT, true);
+    SDL_ShowCursor(SDL_DISABLE);
 
     glm::vec3 UP(0.0f, 1.0f, 0.0f);
     glm::vec3 FORWARD(0.0f, 0.0f, 1.0f);
     *cam = InitCamera(70.f, (float)WIDTH/(float)HEIGHT, 0.01f, 1000.0f, //256.0f
-                         glm::vec3(0.0f, -5.0f, -15.0f), FORWARD, UP);
+                         glm::vec3(0.0f, -5.0f, -15.0f), FORWARD, UP, 0.25f, 2.0f, 0.005f);
 
     glm::vec3 sp = glm::vec3(0.0, 10.0, 0.0);
     glm::ivec3 white = glm::vec3(255.0);
-    ParticleEmitter* particles = new ParticleEmitter(2500, sp, white, 10);
-    sp.x += 10.0f;
-    ParticleEmitter* particles1= new ParticleEmitter(2500, sp, white, 10);
+    //sp.x += -200.0f;
+    int width, height, bytesPerPixel;
+	unsigned char* hfData = stbi_load("./res/textures/Heightmap.png", &width, &height, &bytesPerPixel, 3);
+    int dataLn = width * height * bytesPerPixel; //strlen((const char*)hfData);//*sizeof(unsigned char);  //sizeof(hfData)
 
+    unsigned char* tmpchr = hfData;
 
+    std::cout << "Sizeof const char: " << dataLn << std::endl;
+
+    sp.x = -width/2;
+    sp.z = -height/2;
+    ParticleEmitter* particles = new ParticleEmitter(3500, sp, white, 10);
+    ParticleEmitter* particles1= new ParticleEmitter(3500, sp, white, 10);
+
+    // Setup some OpenGL options
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 	// Initialize The physics world.
 	btDiscreteDynamicsWorld* dynamicsWorld = intitBullet(-9.81f);
     // vector array to store all bullet physics objects
     std::vector<btRigidBody*> rigidbodies;
+
+    glViewport(0, 0, WIDTH, HEIGHT);
+	glEnable(GL_DEPTH_TEST);
     //std::vector<Camera*> cams;
 	//Loading textures and shaders from file...
 	Shader shader("./res/shaders/basicShader");
 	Shader particleShader("./res/shaders/particleShader");
 	Shader screenShader("./res/shaders/screenShader");
+	Shader skyboxShader("./res/shaders/skybox");
+#ifdef USE_DEFERRED_RENDERER
+	Shader deferredShader("./res/shaders/deferredShading");
 
-    Texture texture("./res/textures/container2.png"); //lvv.jpg
-    //Texture texture("./res/textures/brickwall.jpg"); //lvv.jpg
-    //Texture texture2("./res/textures/container2_specular.png"); // bricks.jpg
-    //Texture texture2("./res/textures/brickwall_normal.jpg"); // bricks.jpg
+    deferredShader.Bind();
+
+    glUniform1i(glGetUniformLocation(deferredShader.m_program, "gPosition"), 0);
+    glUniform1i(glGetUniformLocation(deferredShader.m_program, "gNormal"), 1);
+    glUniform1i(glGetUniformLocation(deferredShader.m_program, "gAlbedoSpec"), 2);
+#endif // USE_DEFERRED_RENDERER
+
+    Texture texture("./res/textures/texture_4.png"); //lvv.jpg
+    Texture texture2("./res/textures/normal_4.png"); // bricks.jpg
     Texture texture3("./res/textures/soccer3.jpg");
     Texture bamboo("./res/textures/bamboo.jpg");
-    //Texture gunTex("./res/models/normal_up.jpg");
     Texture particleTexture("./res/textures/Cloud-particle.png");
     Texture particleTexture2("./res/textures/pss.png");
+
+    // Cubemap (Skybox)
+    std::vector<std::string> faces;
+    faces.push_back("./res/textures/skybox/right.jpg");
+    faces.push_back("./res/textures/skybox/left.jpg");
+    faces.push_back("./res/textures/skybox/top.jpg");
+    faces.push_back("./res/textures/skybox/bottom.jpg");
+    faces.push_back("./res/textures/skybox/back.jpg");
+    faces.push_back("./res/textures/skybox/front.jpg");
+    GLuint skyboxTexture = loadCubemap(faces);
 
     Texture* g_tempTarget = NULL;
     int dataSize = WIDTH * HEIGHT * 4;
     unsigned char* data = new unsigned char[dataSize];
     g_tempTarget = new Texture(WIDTH, HEIGHT, data, GL_TEXTURE_2D, GL_NEAREST, GL_COLOR_ATTACHMENT0);
 
-
     Transform planeTransform;
     Transform modelTransform;
 
     Mesh* sphere = new Mesh(setupSphere(1.0f, 15.f, 15.f));
     Mesh* cube = new Mesh(setupCube(1.0f));
-    Mesh* plane = new Mesh(setupLowDensityPlane(30.0f));
-    Mesh* fsQuad = new Mesh(setupFullScreenQuad(0.95));
-
+    //Mesh* plane = new Mesh(setupLowDensityPlane(30.0f));  // new Mesh(setupHighDensityPlane(12, 0.5f, false));
+    Mesh* fsQuad = new Mesh(setupFullScreenQuad(1.0f));
+    Mesh* cubeM = new Mesh(setupCube(6.0f));//Mesh(setupSphere(2.5f, 10.0f, 10.0f));
+    Mesh* terrain = new Mesh(Terrain(0.15, &hfData, width, height, bytesPerPixel)); //(new Model("./res/mountain/nanosuit.obj"));
     glm::vec3 orientation(1.0f);
     glm::vec3 position(0.0f, -20.0f, 0.0f);
-    addPlane(orientation, position, &dynamicsWorld);
+    //addPlane(orientation, position, &dynamicsWorld);
 
+    addTerrain(orientation, position, &dynamicsWorld, 0.15, &hfData, width, height, bytesPerPixel);
+    stbi_image_free(hfData);
 
     setupBoxPositions(rigidbodies, &dynamicsWorld, MAX_OBJECTS);
 
@@ -104,15 +139,27 @@ int main(int argc, char** argv)
     int sphereAdded = MAX_OBJECTS;
 
 
-    SDL_ShowCursor(SDL_DISABLE);
+#ifdef USE_DEFERRED_RENDERER
+    setupDeferredRendering(gBuffer, gPosition, gNormal, gAlbedoSpec, WIDTH, HEIGHT);
+#endif // USE_DEFERRED_RENDERER
+
 
 	while(!glDisplay->isClosed){
 
         g_tempTarget->BindAsRenderTarget();
         Clear(0.0f, 0.0f, 0.0f, 1.0f);
+
+
         //Nessecary..?
         //glDisable(GL_BLEND);
+#ifdef USE_DEFERRED_RENDERER
+        glPolygonMode(GL_FRONT_AND_BACK, false ? GL_LINE : GL_FILL);
+		// 1. Geometry Pass: render scene's geometry/color data into gbuffer
 
+		glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        shader.Bind();
+#endif // USE_DEFERRED_RENDERER
         glEnable(GL_DEPTH_TEST);
 
         sphereLimiter++;
@@ -130,8 +177,6 @@ int main(int argc, char** argv)
             sphereAdded = MAX_OBJECTS;
         }
 
-
-
         particles->UpdateParticles(&cam, .016f);
         particles1->UpdateParticles(&cam, .016f);
 
@@ -143,7 +188,7 @@ int main(int argc, char** argv)
         UpdateCam(&cam, WIDTH, HEIGHT, totalDeltaTime);
         glm::vec3 translate(0.0f,0.0f,0.0f);
         texture.Bind(0);
-        //texture2.Bind(1);
+        texture2.Bind(1);
         //glPolygonMode(GL_FRONT, GL_LINE);
         //glPolygonMode(GL_BACK, GL_LINE);
         for(int i = 0; i < MAX_OBJECTS; i++){
@@ -168,14 +213,21 @@ int main(int argc, char** argv)
 
         shader.Update(planeTransform, *cam);
         bamboo.Bind(0);
-        plane->Draw();
+        //plane->Draw();
 
         shader.Update(planeTransform, *cam);
+        //glEnable(GL_CULL_FACE);
+        //glCullFace(GL_BACK);
 
+        //glEnable(GL_CULL_FACE);
+        //glCullFace(GL_BACK);
+        //glFrontFace(GL_CW);
 
-        //glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-        //nano.Draw();
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        terrain->Draw();
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+        glDisable(GL_CULL_FACE);
+
 #ifdef DEBUG_RENDERER
         mydebugdrawer.SetMatrices(GetView(*cam), cam->projection);
         dynamicsWorld->debugDrawWorld();
@@ -187,14 +239,39 @@ int main(int argc, char** argv)
         if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_RIGHT)){
             int i = getPhysicsObjIndex(&dynamicsWorld, &cam);
             rigidbodies[i]->setActivationState(1.0f);
-            rigidbodies[i]->applyCentralImpulse(btVector3(-push.x, -push.y, -push.z));
+            rigidbodies[i]->applyCentralImpulse(btVector3(push.x, push.y, push.z));
         } else if(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)){
-            if(sphereLimiter >= 20){
+            if(sphereLimiter >= 10){
                 addSphere(1.0, cam->pos, push, 1.0, &dynamicsWorld, rigidbodies, sphereAdded);
                 sphereLimiter = 0;
                 sphereAdded++;
             }
         }
+
+//#ifndef USE_DEFERRED_RENDERER
+        // Cubes
+        Transform tempBlank;
+        glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
+        // Draw skybox as last
+        glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+        skyboxShader.Bind();
+        glm::vec3 hakky = cam->pos;
+        cam->pos = glm::vec3(0.0f);
+        skyboxShader.Update(tempBlank, *cam);
+        cam->pos = hakky;
+        // skybox cube
+        glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
+        cubeM->Draw();
+        glDepthFunc(GL_LESS); // Set depth function back to default
+//#endif
+
+
+#ifndef USE_DEFERRED_RENDERER
+
+
+
+
+
         Transform tmptr;
         particleShader.Bind();
         particleTexture.Bind(0);
@@ -209,10 +286,10 @@ int main(int argc, char** argv)
         // Bind to default framebuffer again and draw the
         // quad plane with attched screen texture.
         // //////////////////////////////////////////////////
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         // Clear all relevant buffers
         Clear(0.0f, 0.15f, 0.3f, 1.0f);
-        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // Set clear color to white (not really necessery actually, since we won't be able to see behind the quad anyways)
         glClear(GL_COLOR_BUFFER_BIT);
         glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
 
@@ -220,10 +297,38 @@ int main(int argc, char** argv)
         g_tempTarget->Bind(0);
         screenShader.Bind();
         fsQuad->Draw();
+#endif // USE_DEFERRED_RENDERER
 
+#ifdef USE_DEFERRED_RENDERER
+        glClearColor(0.0f, 0.15f, 0.3f, 1.0f);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        Transform tr;
+        deferredShader.Bind();
+        deferredShader.Update(tr, *cam);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, gPosition);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, gNormal);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
+
+        fsQuad->Draw();
+
+        // 2.5. Copy content of geometry's depth buffer to default framebuffer's depth buffer
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // Write to default framebuffer
+		// blit to default framebuffer. Note that this may or may not work as the internal formats of both the FBO and default framebuffer have to match.
+		// the internal formats are implementation defined. This works on all of my systems, but if it doesn't on yours you'll likely have to write to the
+		// depth buffer in another stage (or somehow see to match the default framebuffer's internal format with the FBO's internal format).
+        glBlitFramebuffer(0, 0, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
 
         UpdateDisplay(&glDisplay, "Updated");
-        //glDisable(GL_BLEND);
         // Measure Speed
         double currentTime = SDL_GetTicks()/1000;
         nbFrames++;
@@ -253,3 +358,8 @@ int main(int argc, char** argv)
     return 0;
 }
 
+
+
+        //glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+        //nano.Draw();
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

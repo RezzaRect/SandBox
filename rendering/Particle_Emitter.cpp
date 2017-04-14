@@ -1,6 +1,6 @@
 #include "Particle_Emitter.h"
 
-#include "../staticLibs/stb_perlin.h"
+//#include "../staticLibs/stb_perlin.h"
 
 ParticleEmitter::ParticleEmitter(int numParticles, glm::vec3& spawnPoint, glm::ivec3& color, int particlesPerFrame){
     GLuint VertexArrayID;
@@ -105,8 +105,8 @@ void ParticleEmitter::UpdateParticles(Camera** cam, float delta){
     for(int i = 0; i < m_particlesPerFrame; i++){
         int particleIndex = FindUnusedParticle();
         m_ParticlesContainer[particleIndex].life = 5.0f; // This particle will live 5 seconds.m_spawnPointglm::vec3(0.0f ,-10.0f,0.0f);
-        m_ParticlesContainer[particleIndex].pos =  glm::vec3((rand()%2000 - 1000.0f)/25.0f, 30.0f,
-                                                             (rand()%2000 - 1000.0f)/25.0f);  //
+        m_ParticlesContainer[particleIndex].pos =  m_spawnPoint + glm::vec3((rand()%8000 - 1000.0f)/25.0f, 30.0f,
+                                                             (rand()%8000 - 1000.0f)/25.0f);  //
         //m_ParticlesContainer[particleIndex].pos.x-=9.0f;
         float spread = 1.5f;
         glm::vec3 maindir = glm::vec3(3.0f, -1.0f, -5.0f);
@@ -114,7 +114,7 @@ void ParticleEmitter::UpdateParticles(Camera** cam, float delta){
         // See for instance http://stackoverflow.com/questions/5408276/python-uniform-spherical-distribution instead,
         // combined with some user-controlled parameters (main direction, spread, etc)
 
-        float noise = stb_perlin_noise3(time, time/2.0f, time*1.4f, 0, 0, 0);
+        float noise = 1.0f; //stb_perlin_noise3(time, time/2.0f, time*1.4f, 0, 0, 0);
 
         glm::vec3 randomdir = glm::vec3(
             (rand()%2000 - 1000.0f)/1000.0f+sin(noise-time)*1.5f,
