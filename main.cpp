@@ -43,34 +43,14 @@ int main(int argc, char** argv)
     *cam = InitCamera(70.f, (float)WIDTH/(float)HEIGHT, 0.01f, 1000.0f, //256.0f
                          glm::vec3(0.0f, -5.0f, -15.0f), FORWARD, UP, 0.25f, 2.0f, 0.005f);
 
-    glm::vec3 sp = glm::vec3(0.0, 10.0, 0.0);
-    glm::ivec3 white = glm::vec3(255.0);
-    //sp.x += -200.0f;
-    int width, height, bytesPerPixel;
-	unsigned char* hfData = stbi_load("./res/textures/Heightmap.png", &width, &height, &bytesPerPixel, 3);
-    int dataLn = width * height * bytesPerPixel; //strlen((const char*)hfData);//*sizeof(unsigned char);  //sizeof(hfData)
-
-    unsigned char* tmpchr = hfData;
-
-    std::cout << "Sizeof const char: " << dataLn << std::endl;
-
-    sp.x = -width/2;
-    sp.z = -height/2;
-    ParticleEmitter* particles = new ParticleEmitter(3500, sp, white, 10);
-    ParticleEmitter* particles1= new ParticleEmitter(3500, sp, white, 10);
-
     // Setup some OpenGL options
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-	// Initialize The physics world.
-	btDiscreteDynamicsWorld* dynamicsWorld = intitBullet(-9.81f);
-    // vector array to store all bullet physics objects
-    std::vector<btRigidBody*> rigidbodies;
-
     glViewport(0, 0, WIDTH, HEIGHT);
 	glEnable(GL_DEPTH_TEST);
     //std::vector<Camera*> cams;
-	//Loading textures and shaders from file...
+
+	//Loading shaders from file...
 	Shader shader("./res/shaders/basicShader");
 	Shader particleShader("./res/shaders/particleShader");
 	Shader screenShader("./res/shaders/screenShader");
@@ -85,13 +65,14 @@ int main(int argc, char** argv)
     glUniform1i(glGetUniformLocation(deferredShader.m_program, "gAlbedoSpec"), 2);
 #endif // USE_DEFERRED_RENDERER
 
+
+    // Load textures and cubemap...
     Texture texture("./res/textures/texture_4.png"); //lvv.jpg
     Texture texture2("./res/textures/normal_4.png"); // bricks.jpg
     Texture texture3("./res/textures/soccer3.jpg");
     Texture bamboo("./res/textures/bamboo.jpg");
     Texture particleTexture("./res/textures/Cloud-particle.png");
     Texture particleTexture2("./res/textures/pss.png");
-
     // Cubemap (Skybox)
     std::vector<std::string> faces;
     faces.push_back("./res/textures/skybox/right.jpg");
@@ -102,28 +83,50 @@ int main(int argc, char** argv)
     faces.push_back("./res/textures/skybox/front.jpg");
     GLuint skyboxTexture = loadCubemap(faces);
 
-    Texture* g_tempTarget = NULL;
+    Texture* renderToTexture = NULL;
     int dataSize = WIDTH * HEIGHT * 4;
     unsigned char* data = new unsigned char[dataSize];
-    g_tempTarget = new Texture(WIDTH, HEIGHT, data, GL_TEXTURE_2D, GL_NEAREST, GL_COLOR_ATTACHMENT0);
+    renderToTexture = new Texture(WIDTH, HEIGHT, data, GL_TEXTURE_2D, GL_NEAREST, GL_COLOR_ATTACHMENT0);
+
+    // Load heightfield texture and retrieve it's width height and bytes per pixel
+    int hfWidth, hfHeight, bytesPerPixel;
+	unsigned char* hfData = stbi_load("./res/textures/Heightmap.png", &hfWidth, &hfHeight, &bytesPerPixel, 3);
+    unsigned char* tmpchr = hfData;
+    int dataLn = hfWidth * hfHeight * bytesPerPixel; //strlen((const char*)hfData);//*sizeof(unsigned char);  //sizeof(hfData)
+    std::cout << "Sizeof const char: " << dataLn << std::endl;
 
     Transform planeTransform;
     Transform modelTransform;
-
+    // Create meshes cube sphere fullscreen quad(fsQuad) for render to texture
     Mesh* sphere = new Mesh(setupSphere(1.0f, 15.f, 15.f));
     Mesh* cube = new Mesh(setupCube(1.0f));
     //Mesh* plane = new Mesh(setupLowDensityPlane(30.0f));  // new Mesh(setupHighDensityPlane(12, 0.5f, false));
     Mesh* fsQuad = new Mesh(setupFullScreenQuad(1.0f));
     Mesh* cubeM = new Mesh(setupCube(6.0f));//Mesh(setupSphere(2.5f, 10.0f, 10.0f));
-    Mesh* terrain = new Mesh(Terrain(0.15, &hfData, width, height, bytesPerPixel)); //(new Model("./res/mountain/nanosuit.obj"));
+    Mesh* terrain = new Mesh(Terrain(0.15, &hfData, hfWidth, hfHeight, bytesPerPixel)); //(new Model("./res/mountain/nanosuit.obj"));
     glm::vec3 orientation(1.0f);
     glm::vec3 position(0.0f, -20.0f, 0.0f);
-    //addPlane(orientation, position, &dynamicsWorld);
 
-    addTerrain(orientation, position, &dynamicsWorld, 0.15, &hfData, width, height, bytesPerPixel);
+    // Initialize The physics world.
+	btDiscreteDynamicsWorld* dynamicsWorld = intitBullet(-9.81f);
+    // vector array to store all bullet physics objects
+    std::vector<btRigidBody*> rigidbodies;
+    //addPlane(orientation, position, &dynamicsWorld);
+    addTerrain(orientation, position, &dynamicsWorld, 0.15, &hfData, hfWidth, hfHeight, bytesPerPixel);
+    setupBoxPositions(rigidbodies, &dynamicsWorld, MAX_OBJECTS);
     stbi_image_free(hfData);
 
-    setupBoxPositions(rigidbodies, &dynamicsWorld, MAX_OBJECTS);
+    // Setup the particle system create spawn point and color
+    glm::vec3 spawnPoint = glm::vec3(0.0, 10.0, 0.0);
+    glm::ivec3 white = glm::vec3(255.0);
+    //sp.x += -200.0f;
+    spawnPoint.x = -hfWidth/2;
+    spawnPoint.z = -hfHeight/2;
+    ParticleEmitter* particles = new ParticleEmitter(3500, spawnPoint, white, 10);
+    ParticleEmitter* particles1= new ParticleEmitter(3500, spawnPoint, white, 10);
+
+    int sphereLimiter = 0;
+    int sphereAdded = MAX_OBJECTS;
 
     double lastTime = SDL_GetTicks()/1000;
     float previousTicks = SDL_GetTicks();
@@ -135,21 +138,15 @@ int main(int argc, char** argv)
     dynamicsWorld->setDebugDrawer(&mydebugdrawer);
 #endif // DEBUG_RENDERER
 
-    int sphereLimiter = 0;
-    int sphereAdded = MAX_OBJECTS;
-
-
 #ifdef USE_DEFERRED_RENDERER
     setupDeferredRendering(gBuffer, gPosition, gNormal, gAlbedoSpec, WIDTH, HEIGHT);
 #endif // USE_DEFERRED_RENDERER
 
-
 	while(!glDisplay->isClosed){
 
-        g_tempTarget->BindAsRenderTarget();
+        renderToTexture->BindAsRenderTarget();
         Clear(0.0f, 0.0f, 0.0f, 1.0f);
-
-
+        sphereLimiter++;
         //Nessecary..?
         //glDisable(GL_BLEND);
 #ifdef USE_DEFERRED_RENDERER
@@ -162,7 +159,7 @@ int main(int argc, char** argv)
 #endif // USE_DEFERRED_RENDERER
         glEnable(GL_DEPTH_TEST);
 
-        sphereLimiter++;
+
         float newTicks = SDL_GetTicks();
 		float delta = newTicks - previousTicks;
 		previousTicks = newTicks;
@@ -189,8 +186,9 @@ int main(int argc, char** argv)
         glm::vec3 translate(0.0f,0.0f,0.0f);
         texture.Bind(0);
         texture2.Bind(1);
-        //glPolygonMode(GL_FRONT, GL_LINE);
-        //glPolygonMode(GL_BACK, GL_LINE);
+
+        // Draw all cubes 'MAX_OBJECTS' is also used to set all
+        // cube positions for bullet physics as well
         for(int i = 0; i < MAX_OBJECTS; i++){
             //Transform bulletTransform = physicsTransforms(rigidbodies, i);
             physicsTransforms(&bulletTransform, rigidbodies, i);
@@ -200,12 +198,13 @@ int main(int argc, char** argv)
 
         texture3.Bind(0);
 
+        // Draw all spheres loop starts at MAX_OBJECTS then checks
+        // size of rigidbodies to see how many spheres have been added
         for(unsigned int i = MAX_OBJECTS; i < rigidbodies.size(); i++){
             //Transform bulletTransform = physicsTransforms(rigidbodies, i);
             physicsTransforms(&bulletTransform, rigidbodies, i);
             shader.Update(*bulletTransform, *cam);
             sphere->Draw();
-            //fsQuad->Draw();
         }
 
         glm::vec3 planePosition(0.0f, -19.9f, 0.0f);
@@ -213,20 +212,13 @@ int main(int argc, char** argv)
 
         shader.Update(planeTransform, *cam);
         bamboo.Bind(0);
-        //plane->Draw();
 
         shader.Update(planeTransform, *cam);
-        //glEnable(GL_CULL_FACE);
-        //glCullFace(GL_BACK);
-
-        //glEnable(GL_CULL_FACE);
-        //glCullFace(GL_BACK);
-        //glFrontFace(GL_CW);
 
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        //plane->Draw();
         terrain->Draw();
         //glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-        glDisable(GL_CULL_FACE);
 
 #ifdef DEBUG_RENDERER
         mydebugdrawer.SetMatrices(GetView(*cam), cam->projection);
@@ -281,7 +273,6 @@ int main(int argc, char** argv)
         // Bind to default framebuffer again and draw the
         // quad plane with attched screen texture.
         // //////////////////////////////////////////////////
-
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         // Clear all relevant buffers
         Clear(0.0f, 0.15f, 0.3f, 1.0f);
@@ -289,7 +280,7 @@ int main(int argc, char** argv)
         glDisable(GL_DEPTH_TEST); // We don't care about depth information when rendering a single quad
 
         // Draw Screen
-        g_tempTarget->Bind(0);
+        renderToTexture->Bind(0);
         screenShader.Bind();
         fsQuad->Draw();
 #endif // USE_DEFERRED_RENDERER
@@ -323,7 +314,7 @@ int main(int argc, char** argv)
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 #endif
 
-        UpdateDisplay(&glDisplay, "Updated");
+        UpdateDisplay(&glDisplay, "Grit"); //Updated
         // Measure Speed
         double currentTime = SDL_GetTicks()/1000;
         nbFrames++;
